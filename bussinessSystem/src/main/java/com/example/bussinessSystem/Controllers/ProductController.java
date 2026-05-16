@@ -33,6 +33,9 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product editProduct(@PathVariable Long id, @RequestBody Product updatedproduct){
         Product product = productRepo.findById(id).orElse(null);
+        if(product ==null){
+            return null;
+        }
         product.setName(updatedproduct.getName());
         product.setWeight(updatedproduct.getWeight());
         product.setPrice(updatedproduct.getPrice());
