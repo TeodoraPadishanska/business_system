@@ -1,0 +1,52 @@
+package com.example.bussinessSystem.Controllers;
+
+import com.example.bussinessSystem.Repositories.ProductRepository;
+import com.example.bussinessSystem.entities.Product;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    final ProductRepository productRepo;
+
+    ProductController(ProductRepository repo){
+        this.productRepo = repo;
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts(){
+        return productRepo.findAll();
+    }
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id){
+        return productRepo.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public Product createProduct(@RequestBody Product product){
+        return productRepo.save(product);
+    }
+
+    @PutMapping("/{id}")
+    public Product editProduct(@PathVariable Long id, @RequestBody Product updatedproduct){
+        Product product = productRepo.findById(id).orElse(null);
+        product.setName(updatedproduct.getName());
+        product.setWeight(updatedproduct.getWeight());
+        product.setPrice(updatedproduct.getPrice());
+        product.setDescription(updatedproduct.getDescription());
+        product.setCategory(updatedproduct.getCategory());
+        product.setAtStock(updatedproduct.getAtStock());
+        return productRepo.save(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@RequestBody @PathVariable Long id){
+        if(!productRepo.existsById(id)){
+            throw new RuntimeException("Product not found!");
+        }
+        productRepo.deleteById(id);
+    }
+}

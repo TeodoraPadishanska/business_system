@@ -34,6 +34,9 @@ public class UserController {
     @PutMapping("/login/{id}")
     public User loginUser(@RequestBody @PathVariable Long id ){
         User user = userRepo.findById(id).orElse(null);
+        if (user == null){
+            return user;
+        }
         user.setLastLogin(LocalDateTime.now());
         return user;
     }
@@ -41,6 +44,9 @@ public class UserController {
     @PutMapping("/edit/{id}")
     public User editUser(@PathVariable Long id,@RequestBody User updatedUser){
         User user = userRepo.findById(id).orElse(null);
+        if(user == null){
+            return user;
+        }
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());
         user.setEmail(updatedUser.getEmail());
