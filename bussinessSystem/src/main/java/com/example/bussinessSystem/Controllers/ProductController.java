@@ -42,6 +42,7 @@ public class ProductController {
         product.setDescription(updatedproduct.getDescription());
         product.setCategory(updatedproduct.getCategory());
         product.setAtStock(updatedproduct.getAtStock());
+        product.setQuantityAtStock(updatedproduct.getQuantityAtStock());
         return productRepo.save(product);
     }
 
