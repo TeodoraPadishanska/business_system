@@ -9,20 +9,10 @@ import lombok.*;
 @Getter
 @Setter
 
-public class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Order order;
+public class OrderedItem {
 
     @ManyToOne
     private Product product;
-
     private int quantity;
-    private Double totalPrice;
-
 
 }

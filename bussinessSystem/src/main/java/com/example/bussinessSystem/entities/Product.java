@@ -28,5 +28,5 @@ public class Product {
     private Category category;
 
     private boolean isAvailable;
-
+    private Long quantityAtStock;
 }

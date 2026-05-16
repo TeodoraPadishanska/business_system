@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
 
 @Entity
 @AllArgsConstructor
@@ -18,14 +20,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private Long orderNumber;
-
     @ManyToOne
     private User user;
     private OrderStatus orderStatus;
     private Double orderPrice;
-    private LocalDate orderedOn;
+    private LocalDate orderedOn_date;
+    private String address;
+
+    private List<OrderedItem> orderedProducts;
 
 
+    public List<OrderedItem> getOrderedProducts(){
+        return orderedProducts;
+    }
 }
