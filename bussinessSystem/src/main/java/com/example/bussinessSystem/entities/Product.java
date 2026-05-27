@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -21,12 +20,19 @@ public class Product {
     private Long barcode;
 
     private Double price;
-    private Long atStock;
-    private int weight;
+    private Double weight;
 
     @ManyToOne
     private Category category;
 
     private boolean isAvailable;
     private Long quantityAtStock;
+
+    public void setAvailable() {
+        if(quantityAtStock > 0){
+            isAvailable = true;
+        }else {
+            isAvailable = false;
+        }
+    }
 }

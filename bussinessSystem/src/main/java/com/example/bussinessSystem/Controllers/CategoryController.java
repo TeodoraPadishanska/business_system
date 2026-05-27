@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/business/categories")
 public class CategoryController {
 
     final CategoryRepository categoryRepo;
@@ -21,8 +21,13 @@ public class CategoryController {
         return categoryRepo.findAll();
     }
 
+    @PostMapping
+    public Category createCategory(@RequestBody Category category){
+        return categoryRepo.save(category);
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteCategory(@RequestBody @PathVariable Long id){
+    public void deleteCategory( @PathVariable Long id){
         if(!categoryRepo.existsById(id)){
             throw new RuntimeException("Category not found!");
         }

@@ -1,17 +1,13 @@
 package com.example.bussinessSystem.entities;
 
 import com.example.bussinessSystem.enums.MovementType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -22,10 +18,13 @@ public class StockMovement {
     private Long id;
 
     private String product;
+
+    @Enumerated(EnumType.STRING)
     private MovementType movementType;
+
     private String reason;
     private String movedBy;
-    private LocalDateTime movedAt_time;
+    private LocalDateTime movedAt_time = LocalDateTime.now();
 
 
 }

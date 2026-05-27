@@ -6,8 +6,9 @@ import com.example.bussinessSystem.entities.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@RequestMapping("/users")
+@RequestMapping("/business/users")
 @RestController
 public class UserController {
 
@@ -18,8 +19,8 @@ public class UserController {
     }
 
     @GetMapping
-    public UserRepository getAllUsers(){
-        return userRepo;
+    public List<User> getAllUsers(){
+        return userRepo.findAll();
     }
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id){
@@ -31,6 +32,8 @@ public class UserController {
         return userRepo.save(user);
     }
 
+
+    //@RequestBody?
     @PutMapping("/login/{id}")
     public User loginUser(@RequestBody @PathVariable Long id ){
         User user = userRepo.findById(id).orElse(null);
@@ -47,18 +50,18 @@ public class UserController {
         if(user == null){
             return null;
         }
-        user.setFirstName(updatedUser.getFirstName());
-        user.setLastName(updatedUser.getLastName());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-        user.setRoleUser(updatedUser.getRoleUser());
-        user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setFirstName(updatedUser.getFirstName() == null ? user.getFirstName() : updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName()== null ? user.getLastName() : updatedUser.getLastName());
+        user.setEmail(updatedUser.getEmail() == null ? user.getEmail() : updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword() == null ? user.getPassword() : updatedUser.getPassword());
+        user.setRoleUser(updatedUser.getRoleUser() == null ? user.getRoleUser() : updatedUser.getRoleUser());
+        user.setPhoneNumber(updatedUser.getPhoneNumber() == null ? user.getPhoneNumber() : updatedUser.getPhoneNumber());
         user.setLastLogin(LocalDateTime.now());
         return userRepo.save(user);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@RequestBody@PathVariable Long id){
+    public void deleteUser(@RequestBody @PathVariable Long id){
         if(!userRepo.existsById(id)){
             throw new RuntimeException("User not found");
         }
