@@ -1,5 +1,6 @@
 package com.example.bussinessSystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +25,14 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    private boolean isAvailable;
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean isAvailable;
+
     private Long quantityAtStock;
 
-    public void setAvailable() {
-        if(quantityAtStock > 0){
-            isAvailable = true;
-        }else {
-            isAvailable = false;
-        }
+
+    public void setQuantityAtStock(Long quantityAtStock){
+        this.quantityAtStock = quantityAtStock;
+        this.isAvailable = quantityAtStock > 0;
     }
 }

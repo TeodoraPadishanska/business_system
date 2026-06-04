@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "orders")
 
 public class Order {
 
@@ -24,11 +25,15 @@ public class Order {
     private User user;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     private Double orderPrice;
     private LocalDate orderedOn_date = LocalDate.now();
     private String address;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

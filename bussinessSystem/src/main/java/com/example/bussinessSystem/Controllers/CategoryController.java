@@ -27,7 +27,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory( @PathVariable Long id){
+    public void deleteCategory(@PathVariable Long id){
         if(!categoryRepo.existsById(id)){
             throw new RuntimeException("Category not found!");
         }

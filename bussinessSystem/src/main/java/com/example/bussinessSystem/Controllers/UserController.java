@@ -24,7 +24,7 @@ public class UserController {
     }
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id){
-        return userRepo.findById(id).orElse(null);
+        return userRepo.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
     }
 
     @PostMapping("/register")
@@ -36,7 +36,7 @@ public class UserController {
     //@RequestBody?
     @PutMapping("/login/{id}")
     public User loginUser(@RequestBody @PathVariable Long id ){
-        User user = userRepo.findById(id).orElse(null);
+        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         if (user == null){
             return null;
         }
@@ -46,7 +46,7 @@ public class UserController {
 
     @PutMapping("/edit/{id}")
     public User editUser(@PathVariable Long id,@RequestBody User updatedUser){
-        User user = userRepo.findById(id).orElse(null);
+        User user = userRepo.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
         if(user == null){
             return null;
         }

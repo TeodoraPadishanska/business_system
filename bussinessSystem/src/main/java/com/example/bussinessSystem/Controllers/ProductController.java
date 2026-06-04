@@ -26,7 +26,7 @@ public class ProductController {
     }
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id){
-        return productRepo.findById(id).orElse(null);
+        return productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @PostMapping
@@ -51,16 +51,16 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product editProduct(@PathVariable Long id, @RequestBody Product updatedproduct){
-        Product product = productRepo.findById(id).orElse(null);
-        if(product ==null){
-            return null;
-        }
-        product.setName(updatedproduct.getName());
-        product.setWeight(updatedproduct.getWeight());
-        product.setPrice(updatedproduct.getPrice());
-        product.setDescription(updatedproduct.getDescription());
-        product.setCategory(updatedproduct.getCategory());
-        product.setQuantityAtStock(updatedproduct.getQuantityAtStock());
+        Product product = productRepo.findById(id).orElseThrow(() ->  new RuntimeException("Product not found"));
+//        if(product ==null){
+//            return null;
+//        }
+        product.setName(updatedproduct.getName()  == null ? product.getName() : updatedproduct.getName());
+        product.setWeight(updatedproduct.getWeight() == null ? product.getWeight() : updatedproduct.getWeight());
+        product.setPrice(updatedproduct.getPrice() == null ? product.getPrice() : updatedproduct.getPrice());
+        product.setDescription(updatedproduct.getDescription() == null ? product.getDescription() : updatedproduct.getDescription());
+        product.setCategory(updatedproduct.getCategory() == null ? product.getCategory() : updatedproduct.getCategory());
+        product.setQuantityAtStock(updatedproduct.getQuantityAtStock() == null ? product.getQuantityAtStock() : updatedproduct.getQuantityAtStock());
         return productRepo.save(product);
     }
 

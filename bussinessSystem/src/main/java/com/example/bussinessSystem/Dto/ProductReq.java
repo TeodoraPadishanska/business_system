@@ -13,13 +13,4 @@ public class ProductReq {
     private Long categoryId;
     private Long quantityAtStock;
 
-    private boolean isAvailable;
-
-    public void setAvailable() {
-        if(quantityAtStock > 0){
-            isAvailable = true;
-        }else {
-            isAvailable = false;
-        }
-    }
 }

@@ -1,11 +1,17 @@
 package com.example.bussinessSystem.Controllers;
 
+import com.example.bussinessSystem.Dto.OrderReq;
+import com.example.bussinessSystem.Dto.OrderedItemsReq;
 import com.example.bussinessSystem.Repositories.OrderRepository;
 import com.example.bussinessSystem.Repositories.ProductRepository;
+import com.example.bussinessSystem.Repositories.UserRepository;
 import com.example.bussinessSystem.entities.Order;
+import com.example.bussinessSystem.entities.OrderedItem;
 import com.example.bussinessSystem.entities.Product;
+import com.example.bussinessSystem.entities.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,10 +20,12 @@ public class OrderController {
 
     final OrderRepository orderRepo;
     final ProductRepository productRepo;
+    final UserRepository userRepository;
 
-    OrderController(OrderRepository orderRepo, ProductRepository productRepo){
+    OrderController(OrderRepository orderRepo, ProductRepository productRepo, UserRepository userRepository){
         this.orderRepo = orderRepo;
         this.productRepo = productRepo;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -30,21 +38,43 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order){
-        for (int i = 0; i < order.getOrderedProducts().size(); i++) {
+    public Order createOrder(@RequestBody OrderReq orderReq){
 
-            Product product = order.getOrderedProducts().get(i).getProduct();
+        Order order = new Order();
 
-            if(product.getQuantityAtStock() > order.getOrderedProducts().get(i).getQuantity()){
+        order.setOrderPrice(orderReq.getOrderPrice());
+        order.setOrderStatus(orderReq.getOrderStatus());
+        order.setAddress(orderReq.getAddress());
+        order.setPaymentStatus(orderReq.getPaymentStatus());
 
-                product.setQuantityAtStock(product.getQuantityAtStock() - order.getOrderedProducts().get(i).getQuantity());
-                productRepo.save(product);}
-            else{
-                throw new RuntimeException("Not enough available products. Available: " + product.getQuantityAtStock());
+
+        User user = userRepository.findById(orderReq.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        order.setUser(user);
+
+        List<OrderedItem> orderedProducts = new ArrayList<>();
+
+        for(OrderedItemsReq itemReq : orderReq.getItems()){
+            OrderedItem item = new OrderedItem();
+            Product product = productRepo.findById(itemReq.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
+
+            item.setOrder(order);
+            item.setProduct(product);
+            item.setQuantity(itemReq.getQuantity());
+
+            if(product.getQuantityAtStock() < itemReq.getQuantity()){
+                throw new RuntimeException("Not enough products at stock");
             }
-            order.getOrderedProducts().get(i).setOrder(order);
+
+            product.setQuantityAtStock(product.getQuantityAtStock() - itemReq.getQuantity());
+            orderedProducts.add(item);
+
         }
+        order.setOrderedProducts(orderedProducts);
+
         return orderRepo.save(order);
+
     }
 
     @PutMapping("/{id}")
@@ -53,8 +83,8 @@ public class OrderController {
         if (order == null){
             return null;
         }
-        order.setOrderStatus(updatedOrder.getOrderStatus());
-        order.setAddress(updatedOrder.getAddress());
+        order.setOrderStatus(updatedOrder.getOrderStatus() == null ? order.getOrderStatus() : updatedOrder.getOrderStatus());
+        order.setAddress(updatedOrder.getAddress() == null ? order.getAddress() : updatedOrder.getAddress());
         return orderRepo.save(order);
     }
 
