@@ -35,12 +35,18 @@
 
 .cards-container{
     display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    grid-auto-rows: 250px;
-    gap: 16px;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: 10px;
     margin-top: 50px;
     margin-left: 120px;
     margin-right: 120px;
+}
+@media (min-width: 1200px) {
+    .cards-container{
+        gap: 16px;
+        margin: 30px;
+    }
 }
 .cards-container div{
     overflow: hidden;
@@ -107,4 +113,77 @@
 #categories-detergent {
     grid-column: 13 / 17;
     grid-row: 3 / 5;
+}
+.promo-container {
+    margin: 30px;
+}
+.promo-cards {
+    gap: 16px;
+    display: flex;
+    flex-direction: row;
+}
+.card{
+    position: relative;
+    border-radius: 30px;
+    border: none;
+    padding: 10px;
+}
+.discount{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#e53935;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size: x-small;
+}
+.favorite-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+    border:none;
+    background:none;
+    font-size:28px;
+    cursor:pointer;
+}
+.card img{
+    width: 70%;
+    align-self: center;
+}
+.weight{
+    border-radius: 30px;
+    border: 1px solid darkslategray;
+    color: black;
+    background-color: rgb(208 208 208 / 0.44);
+}
+/* Контейнер за подреждане (по избор) */
+.price-container {
+    font-family: Arial, sans-serif; /* Използвайте вашия шрифт */
+    font-size: 24px;               /* Настройте размера според нуждите */
+    font-weight: bold;
+    margin-left: 12px;
+}
+
+/* Новата цена (червена) */
+.new-price {
+    color: #c62828;                /* Специфичното червено от снимката */
+    margin-right: 12px;            /* Разстояние между двете цени */
+}
+
+/* Старата цена (сива и задраскана) */
+.old-price {
+    color: rgb(92 91 91 / 0.97); /* Тъмно сив/черен цвят за самия текст */
+    text-decoration: line-through; /* Задраскваща линия */
+    font-size: 18px;
+}
+.price-per-kilo {
+    color: rgb(179 177 177 / 0.97);
+    font-size: 15px;
+    font-weight: normal;
+}
+.add_item{
+    border-radius: 30px;
+    font: bold 14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
