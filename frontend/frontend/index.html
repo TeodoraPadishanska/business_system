@@ -10,63 +10,45 @@
 <body>
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-<!--        logo-->
-        <img src="images/logo.png" alt="logo" id="logo">
+        <header>
+            <img src="images/logo.png" alt="logo" id="logo">
+            <div class="d-none d-lg-block">
+                <button>
+            </div>
+            <form class="d-flex flex-grow-1 mx-4" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+                    <li class="nav-item d-lg-none" id="categoriesMobile">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#categoriesMobileMenu" role="button" aria-expanded="false">
+                            Categories
+                        </a>
 
-<!--        categories-->
-        <div class="d-none d-lg-block">
-            <li class="nav-item dropdown" id="categories" style="list-style: none;">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Categories
-                </a>
-                <ul class="dropdown-menu" id="categoriesMenu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <div class="collapse" id="categoriesMobileMenu">
+                            <ul class="list-unstyled ms-3">
+                                <li><a class="nav-link" href="#">Action</a></li>
+                                <li><a class="nav-link" href="#">Another action</a></li>
+                                <li><a class="nav-link" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">♡</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">About us</a>
+                    </li>
                 </ul>
-            </li>
-        </div>
-<!--        search bar-->
-        <form class="d-flex flex-grow-1 mx-4" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-
-<!--        mobile menu btn-->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-<!--        mobile menu-->
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
-                <li class="nav-item d-lg-none" id="categoriesMobile">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#categoriesMobileMenu" role="button" aria-expanded="false">
-                        Categories
-                    </a>
-
-                    <div class="collapse" id="categoriesMobileMenu">
-                        <ul class="list-unstyled ms-3">
-                            <li><a class="nav-link" href="#">Action</a></li>
-                            <li><a class="nav-link" href="#">Another action</a></li>
-                            <li><a class="nav-link" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-<!--                favourites-->
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">♡</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">About us</a>
-                </li>
-            </ul>
-        </div>
+            </div>
+        </header>
     </div>
 
 
@@ -167,17 +149,17 @@
                 <div class="price-container">
                     <!-- Цена в Евро -->
                     <div class="price-row">
-                        <span class="new-price">2,91 €</span>
-                        <s class="old-price">3,81 €</s>
+                        <span class="new-price">2,91&nbsp;€</span>
+                        <s class="old-price">3,81&nbsp;€</s>
                     </div>
 
                     <!-- Цена в Лева -->
                     <div class="price-row">
-                        <span class="new-price">5,69 лв.</span>
-                        <s class="old-price">7,45 лв.</s>
+                        <span class="new-price">5,69&nbsp;лв.</span>
+                        <s class="old-price">7,45&nbsp;лв.</s>
                     </div>
                     <div class="price-per-kilo">
-                        <a>11,64 € / 22,77 лв. за кг</a>
+                        <a>11,64&nbsp;€ / 22,77&nbsp;лв. за кг</a>
                     </div>
                 </div>
                 <button type="button" class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>
@@ -196,17 +178,17 @@
                 <div class="price-container">
                     <!-- Цена в Евро -->
                     <div class="price-row">
-                        <span class="new-price">2,91 €</span>
-                        <s class="old-price">3,81 €</s>
+                        <span class="new-price">2,91&nbsp;€</span>
+                        <s class="old-price">3,81&nbsp;€</s>
                     </div>
 
                     <!-- Цена в Лева -->
                     <div class="price-row">
-                        <span class="new-price">5,69 лв.</span>
-                        <s class="old-price">7,45 лв.</s>
+                        <span class="new-price">5,69&nbsp;лв.</span>
+                        <s class="old-price">7,45&nbsp;лв.</s>
                     </div>
                     <div class="price-per-kilo">
-                        <a>11,64 € / 22,77 лв. за кг</a>
+                        <a>11,64&nbsp;€ / 22,77&nbsp;лв. за кг</a>
                     </div>
                 </div>
                 <button type="button" class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>
@@ -232,22 +214,136 @@
     </div>
 </div>
 
-
+<hr>
 
 
 <footer>
-    <div class="footer-btn-container">
-        <button type="button" class="btn btn-outline-warning">
-            <div id="btn-icon">
+    <div id="contact-cards-container">
+        <button type="button" class="contact-card btn first btn-outline-warning">
+            <div id="footer-btn-icon">
                 <img src="images/robot-icon.png" alt="icon">
             </div>
-            <div class="btn-text">
-                <span style="font-size: ">Започни чат</span>
-                <span>Връзка с агент</span>
-                <span>Всеки ден от 08:00 до 22:00</span>
+            <div class="footer-card-text">
+                <h5 class="self-start font-semibold">Започни чат</h5>
+                <span class="text-xs text-gray-60">Връзка с агент</span>
+                <span class="text-xs text-gray-60">Всеки ден от 08:00 до 22:00</span>
             </div>
         </button>
+        <a class="contact-card second">
+            <div class="icon phone-icon">
+                <img src="images/phone-icon.png" alt="phone-icon">
+            </div>
+            <div class="footer-card-text">
+                <h5 class="font-semibold">0700 88 150</h5>
+                <span class="text-xs text-gray-60">Връзка с отдел клиенти</span>
+                <span class="text-xs text-gray-60">Всеки ден от 08:00 до 22:00</span>
+            </div>
+        </a>
+        <a class="contact-card third">
+            <div class="icon phone-icon">
+                <img src="images/phone-icon.png" alt="phone-icon">
+            </div>
+            <div class="footer-card-text">
+                <h5 class="font-semibold">02 442 0127</h5>
+                <span class="text-xs text-gray-60">Връзка с доставчик</span>
+                <span class="text-xs text-gray-60">Всеки ден от 08:00 до 23:00</span>
+            </div>
+        </a>
+        <a class="contact-card fourth">
+            <div class="icon email-icon">
+                <img src="images/email-icon.png" alt="email-icon">
+            </div>
+            <div class="footer-card-text">
+                <h5 class="font-semibold">support@ebag.bg</h5>
+                <span class="text-xs text-gray-60">Имейл отдел клиенти</span>
+                <span class="text-xs text-gray-60">Всеки ден от 08:00 до 22:00</span>
+            </div>
+        </a>
     </div>
+    <div id="download-section-container">
+        <p>Пазарувай по-бързо и удобно с eBag приложението!</p>
+        <div id="download-phone-qrcode">
+            <img id="phone-display" src="images/download-options/phone.svg" alt="phone-display">
+            <img id="qr-code" src="images/download-options/mobile-app-download-qr-code.svg" alt="download-qr-code">
+        </div>
+        <div id="stores">
+            <img id="google-play-download" src="images/download-options/download-g-play-store.svg" alt="google-play-download">
+            <img id="apple-store-download" src="images/download-options/download-apple-store.svg" alt="app-store-download">
+        </div>
+    </div>
+    <div class="info-container">
+        <div class="info-card">
+            <p>Информация</p>
+            <ul>
+                <li><a>Доставка</a></li>
+                <li><a>Често задавани въпроси</a></li>
+                <li><a>Абонаменти</a></li>
+                <li><a>Свържи се с нас</a></li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <p>за нас</p>
+            <ul>
+                <li><a>Отзиви</a></li>
+                <li><a>Кариери</a></li>
+                <li><a>Новини</a></li>
+                <li><a>Стани eBag партньор</a></li>
+                <li><a>Предложи продукт</a></li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <p>последвай ни</p>
+            <ul id="follow-us">
+                <li><img src="images/socials/facebook.svg" alt="facebook"></li>
+                <li><img id="instagram" src="images/socials/instagram.svg" alt="instagram"></li>
+                <li><img src="images/socials/linkedin.svg" alt="linkedin"></li>
+                <li><img src="images/socials/youtube.svg" alt="youtube"></li>
+                <li><img src="images/socials/tiktok.svg" alt="tiktok"></li>
+                <li><img src="images/socials/spotify.svg" alt="spotify"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="currency">
+        <p>
+            <img src="images/flag-eu.svg" alt="flag-eu">
+            <span>1&nbsp;€</span>
+        </p>
+        <span>=</span>
+        <p>
+            <img src="images/bg.svg" alt="flag-bg">
+            <span>1,95583&nbsp;лв.</span>
+        </p>
+    </div>
+    <hr>
+    <div id="politics">
+        <p>Политика за поверителност</p>
+        <p>Политика за замяна на продукти</p>
+        <p>Правила за защита на лицата, подаващи сигнали</p>
+        <p>Общи условия</p>
+        <p>Данни съгласно ЗВЕРБ</p>
+        <p>Бисквитки</p>
+    </div>
+    <hr>
+    <div id="payment">
+        <img src="images/payment-options/apple-pay-mark.svg" alt="">
+        <img src="images/payment-options/bgposts.svg" alt="">
+        <img src="images/payment-options/bulatsa.svg" alt="">
+        <img src="images/payment-options/city-invest-group.svg" alt="">
+        <img src="images/payment-options/edenred.svg" alt="">
+        <img src="images/payment-options/epay.svg" alt="">
+        <img src="images/payment-options/fiducia.svg" alt="">
+        <img src="images/payment-options/foodcard.svg" alt="">
+        <img src="images/payment-options/g-pay-mark.svg" alt="">
+        <img src="images/payment-options/mastercard.svg" alt="">
+        <img src="images/payment-options/mikrofond.svg" alt="">
+        <img src="images/payment-options/my-fin.svg" alt="">
+        <img src="images/payment-options/paypal.svg" alt="">
+        <img src="images/payment-options/pluxee.svg" alt="">
+        <img src="images/payment-options/transcard.svg" alt="">
+        <img src="images/payment-options/uptombou.svg" alt="">
+        <img src="images/payment-options/visa.svg" alt="">
+    </div>
+    <p id="kunviniuns">2026 Кънвиниънс АД. Всички права запазени.</p>
 </footer>
 
 <script src="Main.js"></script>
