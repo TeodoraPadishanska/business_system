@@ -10,6 +10,7 @@ import java.util.List;
 
 @RequestMapping("/business/users")
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 public class UserController {
 
     final UserRepository userRepo;
