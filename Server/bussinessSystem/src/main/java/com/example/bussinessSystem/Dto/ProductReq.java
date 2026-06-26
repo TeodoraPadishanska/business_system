@@ -6,10 +6,10 @@ import lombok.Data;
 public class ProductReq {
 
     private String name;
-    private String description;
+    private String brand;
     private Long barcode;
     private Double price;
-    private Double weight;
+    private Double weight_quantity;
     private Long categoryId;
     private Long quantityAtStock;
 

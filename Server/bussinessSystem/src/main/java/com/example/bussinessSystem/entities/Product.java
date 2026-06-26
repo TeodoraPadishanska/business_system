@@ -14,13 +14,13 @@ public class Product {
     private Long id;
 
     private String name;
-    private String description;
+    private String brand;
 
     @Column(unique = true)
     private Long barcode;
 
     private Double price;
-    private Double weight;
+    private Double weight_quantity;
 
     @ManyToOne
     private Category category;
