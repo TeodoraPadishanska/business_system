@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class Order {
     private OrderStatus orderStatus;
 
     private Double orderPrice;
-    private LocalDate orderedOn_date = LocalDate.now();
+    private LocalDateTime orderedOn_date;
     private String address;
 
     @Enumerated(EnumType.ORDINAL)
@@ -39,5 +40,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderedItem> orderedProducts;
 
-
+    @PrePersist
+    public void prePersist() {
+        orderedOn_date = LocalDateTime.now();
+        if (orderStatus == null) orderStatus = OrderStatus.PENDING;
+        if (paymentStatus == null) paymentStatus = PaymentStatus.UNPAID;
+    }
 }

@@ -18,6 +18,7 @@ public class StockMovement {
     private Long id;
 
     private String product;
+    private Long quantity;
 
     @Enumerated(EnumType.STRING)
     private MovementType movementType;

@@ -7,10 +7,13 @@ public class ProductReq {
 
     private String name;
     private String brand;
-    private Long barcode;
+    private String barcode;
     private Double price;
-    private Double weight_quantity;
+    private Double weightQuantity;
     private Long categoryId;
     private Long quantityAtStock;
-
+    private String unit;
+    private Boolean isOnSale;
+    private Double salePrise;
+    private String imgUrl;
 }

@@ -20,4 +20,10 @@ public class Category {
 
     private String description;
 
+    @PrePersist
+    public void prePersist() {
+        if(description == null){
+            description = name;
+        }
+    }
 }

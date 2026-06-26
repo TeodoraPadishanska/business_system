@@ -43,9 +43,13 @@ public class ProductController {
         product.setBrand(request.getBrand());
         product.setBarcode(request.getBarcode());
         product.setPrice(request.getPrice());
-        product.setWeight_quantity(request.getWeight_quantity());
+        product.setWeightQuantity(request.getWeightQuantity());
         product.setCategory(category);
         product.setQuantityAtStock(request.getQuantityAtStock());
+        product.setUnit(request.getUnit());
+        product.setImgUrl(request.getImgUrl());
+        product.setIsOnSale(request.getIsOnSale());
+        product.setSalePrise(request.getSalePrise());
 
         return productRepo.save(product);
     }
@@ -57,11 +61,15 @@ public class ProductController {
 //            return null;
 //        }
         product.setName(updatedproduct.getName()  == null ? product.getName() : updatedproduct.getName());
-        product.setWeight_quantity(updatedproduct.getWeight_quantity() == null ? product.getWeight_quantity() : updatedproduct.getWeight_quantity());
+        product.setWeightQuantity(updatedproduct.getWeightQuantity() == null ? product.getWeightQuantity() : updatedproduct.getWeightQuantity());
         product.setPrice(updatedproduct.getPrice() == null ? product.getPrice() : updatedproduct.getPrice());
         product.setBrand(updatedproduct.getBrand() == null ? product.getBrand() : updatedproduct.getBrand());
         product.setCategory(updatedproduct.getCategory() == null ? product.getCategory() : updatedproduct.getCategory());
         product.setQuantityAtStock(updatedproduct.getQuantityAtStock() == null ? product.getQuantityAtStock() : updatedproduct.getQuantityAtStock());
+        product.setUnit(updatedproduct.getUnit() == null ? product.getUnit() : updatedproduct.getUnit());
+        product.setSalePrise(updatedproduct.getSalePrise() == null ? product.getSalePrise() : updatedproduct.getSalePrise());
+        product.setIsOnSale(updatedproduct.getIsOnSale() == null ? product.getIsOnSale() : updatedproduct.getIsOnSale());
+        product.setImgUrl(updatedproduct.getImgUrl() == null ? product.getImgUrl() : updatedproduct.getImgUrl());
         return productRepo.save(product);
     }
 

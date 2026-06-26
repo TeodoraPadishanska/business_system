@@ -1,8 +1,9 @@
 package com.example.bussinessSystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,10 +18,11 @@ public class Product {
     private String brand;
 
     @Column(unique = true)
-    private Long barcode;
+    private String barcode;
 
     private Double price;
-    private Double weight_quantity;
+    private Double weightQuantity;
+    private String unit;
 
     @ManyToOne
     private Category category;
@@ -29,10 +31,23 @@ public class Product {
     private Boolean isAvailable;
 
     private Long quantityAtStock;
+    private Boolean isOnSale;
+    private Double salePrise;
+    private String imgUrl;
 
 
     public void setQuantityAtStock(Long quantityAtStock){
         this.quantityAtStock = quantityAtStock;
         this.isAvailable = quantityAtStock > 0;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (isAvailable == null) {
+            isAvailable = quantityAtStock != null && quantityAtStock > 0;
+        }
+        if (isOnSale == null) {
+            isOnSale = false;
+        }
     }
 }

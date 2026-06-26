@@ -2,6 +2,7 @@ package com.example.bussinessSystem.entities;
 
 import com.example.bussinessSystem.enums.Role_user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "Users")
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class User {
 
@@ -19,37 +22,32 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(unique = true)
     private String phoneNumber;
 
-    //?
     @Enumerated(EnumType.STRING)
     private Role_user roleUser;
 
     @Column(updatable = false)
-    private LocalDateTime createdAt ;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    private LocalDateTime lastLogin;
-
-    public User(Long id, String firstName, String lastName, String email, String password, String phoneNumber, Role_user roleUser) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.roleUser = roleUser;
-        this.createdAt = LocalDateTime.now();;
-        this.lastLogin = LocalDateTime.now();;
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+        if(roleUser == null){
+            roleUser = Role_user.CUSTOMER;
+        }
     }
-
-    public User() {
-        this.createdAt = LocalDateTime.now();;
-        this.lastLogin = LocalDateTime.now();;
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }

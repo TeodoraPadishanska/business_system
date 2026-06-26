@@ -41,7 +41,7 @@ public class UserController {
         if (user == null){
             return null;
         }
-        user.setLastLogin(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         return user;
     }
 
@@ -57,7 +57,7 @@ public class UserController {
         user.setPassword(updatedUser.getPassword() == null ? user.getPassword() : updatedUser.getPassword());
         user.setRoleUser(updatedUser.getRoleUser() == null ? user.getRoleUser() : updatedUser.getRoleUser());
         user.setPhoneNumber(updatedUser.getPhoneNumber() == null ? user.getPhoneNumber() : updatedUser.getPhoneNumber());
-        user.setLastLogin(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         return userRepo.save(user);
     }
 
