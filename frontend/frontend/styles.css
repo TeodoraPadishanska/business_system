@@ -410,3 +410,46 @@ hr{
     color: slategrey;
     margin-bottom: 40px;
 }
+#home-category{
+    display: flex;
+    align-items: center;
+}
+#subcategories{
+    margin: 80px;
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#subcategories button{
+    width: 330px;
+    border: rgb(108 117 125 / 0.55) solid 2px;
+}
+#subcategories img{
+    height: 70px;
+}
+.popular-card{
+    position: relative;
+    border-radius: 30px;
+    border: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.weight2{
+    border-radius: 30px;
+    border: 1px solid darkslategray;
+    color: black;
+    background-color: rgb(208 208 208 / 0.44);
+    position: absolute;
+    top: 25px;
+}
+.category-favorite-btn{
+    position:absolute;
+    top:10px;
+    left:190px;
+    border:none;
+    background:none;
+    font-size:28px;
+    cursor:pointer;
+}
