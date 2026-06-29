@@ -49,7 +49,7 @@ public class ProductController {
         product.setUnit(request.getUnit());
         product.setImgUrl(request.getImgUrl());
         product.setIsOnSale(request.getIsOnSale());
-        product.setSalePrise(request.getSalePrise());
+        product.setSalePrice(request.getSalePrice());
 
         return productRepo.save(product);
     }
@@ -64,7 +64,7 @@ public class ProductController {
         product.setCategory(updatedproduct.getCategory() == null ? product.getCategory() : updatedproduct.getCategory());
         product.setQuantityAtStock(updatedproduct.getQuantityAtStock() == null ? product.getQuantityAtStock() : updatedproduct.getQuantityAtStock());
         product.setUnit(updatedproduct.getUnit() == null ? product.getUnit() : updatedproduct.getUnit());
-        product.setSalePrise(updatedproduct.getSalePrise() == null ? product.getSalePrise() : updatedproduct.getSalePrise());
+        product.setSalePrice(updatedproduct.getSalePrice() == null ? product.getSalePrice() : updatedproduct.getSalePrice());
         product.setIsOnSale(updatedproduct.getIsOnSale() == null ? product.getIsOnSale() : updatedproduct.getIsOnSale());
         product.setImgUrl(updatedproduct.getImgUrl() == null ? product.getImgUrl() : updatedproduct.getImgUrl());
         return productRepo.save(product);

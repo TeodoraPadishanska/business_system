@@ -14,6 +14,6 @@ public class ProductReq {
     private Long quantityAtStock;
     private String unit;
     private Boolean isOnSale;
-    private Double salePrise;
+    private Double salePrice;
     private String imgUrl;
 }

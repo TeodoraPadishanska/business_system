@@ -32,7 +32,7 @@ public class Product {
 
     private Long quantityAtStock;
     private Boolean isOnSale;
-    private Double salePrise;
+    private Double salePrice;
     private String imgUrl;
 
 
