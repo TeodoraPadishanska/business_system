@@ -57,9 +57,6 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product editProduct(@PathVariable Long id, @RequestBody Product updatedproduct){
         Product product = productRepo.findById(id).orElseThrow(() ->  new RuntimeException("Product not found"));
-//        if(product ==null){
-//            return null;
-//        }
         product.setName(updatedproduct.getName()  == null ? product.getName() : updatedproduct.getName());
         product.setWeightQuantity(updatedproduct.getWeightQuantity() == null ? product.getWeightQuantity() : updatedproduct.getWeightQuantity());
         product.setPrice(updatedproduct.getPrice() == null ? product.getPrice() : updatedproduct.getPrice());
