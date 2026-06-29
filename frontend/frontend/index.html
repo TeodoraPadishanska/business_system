@@ -28,9 +28,9 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
                     <li class="nav-item d-lg-none" id="categoriesMobile">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#categoriesMobileMenu" role="button" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle" data-bs-toggle="modal" role="button" data-bs-target="#categories-modal">
                             Categories
-                        </a>
+                        </button>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">♡</a>
@@ -129,7 +129,7 @@
 
     <div class="promo-container">
         <h2>Промо: </h2>
-        <div class="promo-cards">
+        <div id="promo-cards">
             <div class="card" style="width: 18rem;">
                 <span class="discount"> - 21%</span>
                 <button class="favorite-btn">♡</button>
@@ -210,23 +210,6 @@
 </div>
 
 <hr>
-<!--modals-->
-<div class="modal fade" id="categories-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: rgb(223 223 223 / 0.55)">
-                <h1 class="modal-title fs-5" id="exampleModalLabel" style="font: bold 22px Arial; ">Категории</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="menu" class="modal-body">
-                <a href="categrgory.html"><img src="images/categories/vegetables-fruits.png">Плодове и зеленчуци</a>
-                <a href="categrgory.html"><img src="images/categories/meat.png">Месо и риба</a>
-                <a href="categrgory.html"><img src="images/categories/eggs.png">Млечни и яйца</a>
-                <a href="categrgory.html"><img src="images/categories/delicates.png">Колбаси и деликатеси</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <footer>
     <div id="contact-cards-container">
@@ -357,7 +340,24 @@
     <p id="kunviniuns">2026 Кънвиниънс АД. Всички права запазени.</p>
 </footer>
 
-<div id="products"></div>
+<!--modals-->
+<div class="modal fade" id="categories-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgb(223 223 223 / 0.55)">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="font: bold 22px Arial; ">Категории</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="menu" class="modal-body">
+                <a href="categrgory.html"><img src="images/categories/vegetables-fruits.png">Плодове и зеленчуци</a>
+                <a href="categrgory.html"><img src="images/categories/meat.png">Месо и риба</a>
+                <a href="categrgory.html"><img src="images/categories/eggs.png">Млечни и яйца</a>
+                <a href="categrgory.html"><img src="images/categories/delicates.png">Колбаси и деликатеси</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="Main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

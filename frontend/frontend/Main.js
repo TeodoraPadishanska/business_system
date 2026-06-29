@@ -1,11 +1,47 @@
 let products = [];
 fetch("http://localhost:8080/business/products")
 .then(response => response.json())
-.then(data => {
-    products = data;
-    let container = document.getElementById('products');
-    data.forEach((product) => {
-        container.innerHTML += `<div class="product"> <h2>${product.name}</h2><p>ID: ${product.id}</p></div>`
-    });
+.then(products => {
+    let container = document.getElementById('promo-cards');
+    products.forEach(product => {
+        const card = createProductCard(product);
+        container.append(card);
+    })
 })
 .catch(error => console.log(error));
+
+function calculateDiscount(product) {
+    if(product.isOnSale){
+        return Math.round(((product.price - product.salePrice) / product.price) * 100);
+    }
+    return 0;
+}
+function createProductCard(product) {
+    const card = document.createElement('div');
+    const discount = calculateDiscount(product)
+    card.className = 'card';
+    card.style.width = '18rem';
+
+    card.innerHTML = `
+        ${product.isOnSale ? `<span class = "discount">- ${discount}%</span>` : ""}
+        <button class="favourite-btn">♡</button>
+        <img class="card-img-top" src="${product.imageUrl}" alt="${product.name}">
+        <div class="card-body">
+            <h5 class="card-title">${product.name}</h5>
+        </div>
+        <div class="price-container">
+            <div class="price-row">
+        <span class="new-price">
+          ${product.isOnSale ? product.salePrice : product.price} €
+        </span>
+
+        ${product.isOnSale ? `<s class="old-price">${product.price} €</s>` : ""}
+      </div>
+    </div>
+
+    <button class="add_item btn btn-outline-dark" style="margin: 12px">
+      Добави
+    </button>
+    `;
+    return card;
+}
