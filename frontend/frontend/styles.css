@@ -147,11 +147,13 @@ header{
         margin-top: 30px;
     }
 }
-.promo-cards {
+#promo-cards{
     gap: 16px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
+
 .card{
     position: relative;
     border-radius: 30px;

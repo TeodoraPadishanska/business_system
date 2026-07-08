@@ -7,7 +7,9 @@ fetch("http://localhost:8080/business/products")
     products.forEach(product => {
         const card = createProductCard(product);
         container.append(card);
+        console.log(product);
     })
+
 })
 .catch(error => console.log(error));
 
