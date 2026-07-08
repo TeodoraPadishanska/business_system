@@ -453,3 +453,7 @@ hr{
     font-size:28px;
     cursor:pointer;
 }
+.modal-dialog{
+    background-color: lightgray;
+    border-radius: 15px;
+}

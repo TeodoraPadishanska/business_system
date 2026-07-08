@@ -35,6 +35,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">♡</a>
                     </li>
+                    <li>
+                        <button class="nav-link" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>
@@ -324,6 +327,79 @@
                 <a href="categrgory.html"><img src="images/categories/eggs.png">Млечни и яйца</a>
                 <a href="categrgory.html"><img src="images/categories/delicates.png">Колбаси и деликатеси</a>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="log-in-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form class="px-4 py-3">
+            <div class="mb-3">
+                <label for="exampleDropdownFormEmail1" class="form-label">Имейл адрес</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleDropdownFormPassword1" class="form-label">Парола</label>
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Парола">
+            </div>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                    <label class="form-check-label" for="dropdownCheck">
+                        Запомни ме
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Вход</button>
+        </form>
+        <div class="dropdown-divider"></div>
+            <a data-bs-toggle="modal" data-bs-target="#sign-up-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">
+                Нямаш профил? Регистрирай се
+            </a>
+            <a class="dropdown-item" href="#" style="margin-left: 30px; margin-bottom: 20px">Забравена парола?</a>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sign-up-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="px-4 py-3">
+                <div class="mb-3">
+                    <label for="exampleDropdownFormEmail1" class="form-label">Имейл адрес</label>
+                    <input type="email" class="form-control" id="exampleDropdownFormEmail1 second" placeholder="email@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleDropdownFormPassword1" class="form-label">Парола</label>
+                    <input type="password" class="form-control" id="exampleDropdownFormPassword1 second" placeholder="Парола">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="exampleDropdownFormPassword1 second-2" placeholder="Повтори паролата">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleDropdownFormPassword1" class="form-label">Име и фамилия</label>
+                    <input type="text" class="form-control" id="first-name" placeholder="Име">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="last-name" placeholder="Фамилия">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleDropdownFormPassword1" class="form-label">Телефонен номер</label>
+                    <input type="text" class="form-control" id="phone-number">
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck second">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Запомни ме
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a data-bs-toggle="modal" data-bs-target="#log-in-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px; margin-bottom: 20px">
+                Вече имаш профил? Вход
+            </a>
         </div>
     </div>
 </div>
