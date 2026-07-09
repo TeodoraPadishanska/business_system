@@ -11,7 +11,9 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <header>
-            <img src="images/logo.png" alt="logo" id="logo">
+            <a href="index.html">
+                <img src="images/logo.png" alt="logo" id="logo">
+            </a>
 
             <div class="d-none d-lg-block">
                 <button id="categories-button" class="btn btn-primary dropdown-toggle" data-bs-toggle="modal" data-bs-target="#categories-modal">
@@ -28,12 +30,15 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
                     <li class="nav-item d-lg-none" id="categoriesMobile">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#categoriesMobileMenu" role="button" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle" data-bs-toggle="modal" role="button" data-bs-target="#categories-modal">
                             Categories
-                        </a>
+                        </button>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">♡</a>
+                    </li>
+                    <li>
+                        <button class="nav-link" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -45,6 +50,8 @@
             </div>
         </header>
     </div>
+
+
 </nav>
 <div class="second-container-fluid">
 

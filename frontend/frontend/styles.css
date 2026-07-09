@@ -297,6 +297,11 @@ hr{
     flex-direction: column;
     text-decoration: none;
 }
+#footer-btn-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #footer-btn-icon img{
     width: 56px;
     height: 56px;
@@ -458,4 +463,36 @@ hr{
 .modal-dialog{
     background-color: lightgray;
     border-radius: 15px;
+}
+#robot-icon{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+#main-img {
+    width: calc(100vw - 40px);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#main-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+#main-img p{
+    font: 19px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-top: 30px;
+}
+#container-main{
+    margin-right: 20px;
+    margin-left: 20px;
+}
+#container-main h3{
+    font: bold 35px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+#chefs.card{
+    border: 1px solid darkslategray;
 }

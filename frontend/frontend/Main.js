@@ -47,3 +47,24 @@ function createProductCard(product) {
     <button class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>`;
     return card;
 }
+async function createAccount(){
+    console.log("bravo momche");
+    console.log("bravo momche");
+    const data = {
+        email:  document.getElementById('email-input-register').value,
+        password : document.getElementById('password-input-register').value,
+        firstName : document.getElementById('first-name-register').value,
+        lastName : document.getElementById('last-name-register').value,
+        phoneNumber : document.getElementById('phone-number-register').value
+    };
+
+    const res = await fetch("http://localhost:8080/business/users/register", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+
+
+}
