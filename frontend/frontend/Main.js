@@ -48,8 +48,6 @@ function createProductCard(product) {
     return card;
 }
 async function createAccount(){
-    console.log("bravo momche");
-    console.log("bravo momche");
     const data = {
         email:  document.getElementById('email-input-register').value,
         password : document.getElementById('password-input-register').value,
