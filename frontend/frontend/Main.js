@@ -48,12 +48,43 @@ function createProductCard(product) {
     return card;
 }
 async function createAccount(){
+    const email = document.getElementById("email-input-register");
+    const password = document.getElementById("password-input-register");
+    const repeatPassword = document.getElementById("password-repeat-input-register");
+    const firstName = document.getElementById("first-name-register");
+    const lastName = document.getElementById("last-name-register");
+    const phoneNumber = document.getElementById("phone-number-register");
+
+    if(password.value === repeatPassword.value){
+        repeatPassword.style.border = "1px solid lightgray";
+        document.getElementById("password-repeat-error").innerHTML = "";
+    }else{
+        repeatPassword.style.border = "2px solid red";
+        document.getElementById("password-repeat-error").innerHTML = "Паролата не съвпада! ";
+    }
+
+    let valid = true;
+
+    [email, password, firstName, lastName, phoneNumber].forEach(input => {
+        if (input.value.trim() === "") {
+            input.style.border = "2px solid red";
+            valid = false;
+        } else {
+            input.style.border = "";
+        }
+    });
+
+    if (!valid) {
+        alert("Попълнете всички полета!");
+        return;
+    }
+
     const data = {
-        email:  document.getElementById('email-input-register').value,
-        password : document.getElementById('password-input-register').value,
-        firstName : document.getElementById('first-name-register').value,
-        lastName : document.getElementById('last-name-register').value,
-        phoneNumber : document.getElementById('phone-number-register').value
+        email:  email.value,
+        password : password.value,
+        firstName : firstName.value,
+        lastName : lastName.value,
+        phoneNumber : phoneNumber.value
     };
 
     const res = await fetch("http://localhost:8080/business/users/register", {
@@ -63,6 +94,34 @@ async function createAccount(){
         },
         body: JSON.stringify(data)
     });
+    if (res.ok) {
 
+        alert("Регистрацията е успешна!");
 
+        let modalElement = document.getElementById("register-modal");
+        let modal = bootstrap.Modal.getInstance(modalElement);
+
+        modal.hide();
+        document.getElementById("register-form").reset();
+        return;
+    }
+    if (res.status === 409) {
+        const data = await res.json();
+        if (data.error === "EMAIL_EXISTS") {
+            // alert("Този email вече е регистриран!");
+            email.style.border = "2px solid red";
+            document.getElementById("email-register-error").innerHTML = "Този email вече е регистриран!";
+        }else{
+            email.style.border = "1px solid lightgray";
+            document.getElementById("email-register-error").innerHTML = "";
+        }
+        if (data.error === "PHONE_EXISTS") {
+            // alert("Този телефонен номер вече е регистриран!");
+            phoneNumber.style.border = "2px solid red";
+            document.getElementById("phone-register-error").innerHTML = "Този телефонен номер вече е регистриран!";
+        }else{
+            phoneNumber.style.border = "1px solid lightgray";
+            document.getElementById("phone-register-error").innerHTML = "";
+        }
+    }
 }

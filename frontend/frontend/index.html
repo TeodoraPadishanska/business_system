@@ -364,20 +364,21 @@
             <button type="submit" class="btn btn-primary">Вход</button>
         </form>
         <div class="dropdown-divider"></div>
-            <a data-bs-toggle="modal" data-bs-target="#sign-up-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">
+            <a data-bs-toggle="modal" data-bs-target="#register-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">
                 Нямаш профил? Регистрирай се
             </a>
             <a class="dropdown-item" href="#" style="margin-left: 30px; margin-bottom: 20px">Забравена парола?</a>
         </div>
     </div>
 </div>
-<div class="modal fade" id="sign-up-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
+<div class="modal fade" id="register-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="px-4 py-3">
+            <form class="px-4 py-3" id="register-form">
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail1" class="form-label">Имейл адрес</label>
                     <input type="email" class="form-control" id="email-input-register" placeholder="email@example.com">
+                    <p id="email-register-error" style="color:red;"></p>
                 </div>
                 <div class="mb-3">
                     <label for="exampleDropdownFormPassword1" class="form-label">Парола</label>
@@ -385,6 +386,7 @@
                 </div>
                 <div class="mb-3">
                     <input type="password" class="form-control" id="password-repeat-input-register" placeholder="Повтори паролата">
+                    <p id="password-repeat-error" style="color:red;"></p>
                 </div>
                 <div class="mb-3">
                     <label for="exampleDropdownFormPassword1" class="form-label">Име и фамилия</label>
@@ -396,6 +398,7 @@
                 <div class="mb-3">
                     <label for="exampleDropdownFormPassword1" class="form-label">Телефонен номер</label>
                     <input type="text" class="form-control" id="phone-number-register">
+                    <p id="phone-register-error" style="color:red;"></p>
                 </div>
                 <div class="mb-3">
                     <div class="form-check">
