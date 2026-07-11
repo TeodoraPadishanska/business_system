@@ -27,6 +27,14 @@ public class CategoryController {
         return categoryRepo.save(category);
     }
 
+    @PutMapping("/{id}")
+    public Category editCategory(@RequestBody @PathVariable Long id, Category updatedCategory){
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        category.setName(updatedCategory.getName() == null ? category.getName() : updatedCategory.getName());
+        category.setDescription(updatedCategory.getDescription() == null ? category.getDescription() : updatedCategory.getDescription());
+        return categoryRepo.save(category);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id){
         if(!categoryRepo.existsById(id)){

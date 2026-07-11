@@ -22,13 +22,11 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @Column(unique = true, nullable = false)
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(unique = true)
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -42,8 +40,8 @@ public class User {
     public void prePersist() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if(roleUser == null){
-            roleUser = Role_user.CUSTOMER;
+        if(this.roleUser == null){
+            this.roleUser = Role_user.CUSTOMER;
         }
     }
     @PreUpdate

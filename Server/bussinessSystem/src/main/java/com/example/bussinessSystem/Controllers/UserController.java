@@ -3,10 +3,14 @@ package com.example.bussinessSystem.Controllers;
 import com.example.bussinessSystem.Repositories.UserRepository;
 import com.example.bussinessSystem.entities.User;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+
 
 @RequestMapping("/business/users")
 @RestController
@@ -29,18 +33,35 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User addUser(@RequestBody User user){
-        return userRepo.save(user);
+    public ResponseEntity<?> addUser(@RequestBody User user){
+
+        if (userRepo.existsByEmail(user.getEmail())) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of(
+                            "error", "EMAIL_EXISTS",
+                            "message", "Този email вече е използван."
+                    ));
+        }
+
+        if (userRepo.existsByPhoneNumber(user.getPhoneNumber())) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of(
+                            "error", "PHONE_EXISTS",
+                            "message", "Този телефонен номер вече е използван."
+                    ));
+        }
+
+        User savedUser = userRepo.save(user);
+
+        return ResponseEntity.ok(savedUser);
     }
 
-
-    //@RequestBody?
+    //?
     @PutMapping("/login/{id}")
     public User loginUser(@RequestBody @PathVariable Long id ){
         User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        if (user == null){
-            return null;
-        }
         user.setUpdatedAt(LocalDateTime.now());
         return user;
     }
@@ -48,9 +69,6 @@ public class UserController {
     @PutMapping("/edit/{id}")
     public User editUser(@PathVariable Long id,@RequestBody User updatedUser){
         User user = userRepo.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
-        if(user == null){
-            return null;
-        }
         user.setFirstName(updatedUser.getFirstName() == null ? user.getFirstName() : updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName()== null ? user.getLastName() : updatedUser.getLastName());
         user.setEmail(updatedUser.getEmail() == null ? user.getEmail() : updatedUser.getEmail());
