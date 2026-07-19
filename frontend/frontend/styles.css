@@ -493,6 +493,24 @@ hr{
     justify-content: center;
     margin-top: 50px;
 }
-#chefs.card{
-    border: 1px solid darkslategray;
+#chefs #card{
+    width: 500px;
+}
+#card-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#cart-link{
+    display: flex;
+    align-items: center;
+    border-radius: 80px;
+    color: white;
+    background-color: rgb(62 146 59 / 1);
+    padding: 10px;
+    gap: 10px;
+}
+#cart-total{
+    display: flex;
+    flex-direction: column;
 }

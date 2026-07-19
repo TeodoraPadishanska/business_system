@@ -94,13 +94,10 @@ async function createAccount(){
         },
         body: JSON.stringify(data)
     });
+
     if (res.ok) {
-
         alert("Регистрацията е успешна!");
-
-        let modalElement = document.getElementById("register-modal");
-        let modal = bootstrap.Modal.getInstance(modalElement);
-
+        let modal = bootstrap.Modal.getInstance(document.getElementById("register-modal"));
         modal.hide();
         document.getElementById("register-form").reset();
         return;
@@ -110,7 +107,7 @@ async function createAccount(){
         if (data.error === "EMAIL_EXISTS") {
             // alert("Този email вече е регистриран!");
             email.style.border = "2px solid red";
-            document.getElementById("email-register-error").innerHTML = "Този email вече е регистриран!";
+            document.getElementById("email-register-error").innerHTML = data.message;
         }else{
             email.style.border = "1px solid lightgray";
             document.getElementById("email-register-error").innerHTML = "";
@@ -118,10 +115,45 @@ async function createAccount(){
         if (data.error === "PHONE_EXISTS") {
             // alert("Този телефонен номер вече е регистриран!");
             phoneNumber.style.border = "2px solid red";
-            document.getElementById("phone-register-error").innerHTML = "Този телефонен номер вече е регистриран!";
+            document.getElementById("phone-register-error").innerHTML = data.message;
         }else{
             phoneNumber.style.border = "1px solid lightgray";
+            //?
             document.getElementById("phone-register-error").innerHTML = "";
+        }
+    }
+}
+
+async function login(){
+    const email = document.getElementById("email-input-log-in");
+    const password = document.getElementById("password-input-log-in");
+
+    const data = {
+        email:  email.value,
+        password:  password.value,
+    }
+
+    const res = await fetch("http://localhost:8080/business/users/login", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    const responseJson = await res.json();
+
+    if (res.ok) {
+        alert(responseJson.message);
+        console.log(data.id);
+        console.log(data.name);
+        let modal = bootstrap.Modal.getInstance(document.getElementById("log-in-modal"));
+        modal.hide();
+        document.getElementById("log-in-form").reset();
+    }else if(res.status === 401) {
+        if (responseJson.error === "INVALID_PASSWORD") {
+            alert(responseJson.message);
+        }else if(responseJson.error === "INVALID_EMAIL") {
+            alert(responseJson.message);
         }
     }
 }
