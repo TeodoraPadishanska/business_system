@@ -1,11 +1,14 @@
 package com.example.bussinessSystem.Controllers;
 
+import com.example.bussinessSystem.Dto.LoginUser;
 import com.example.bussinessSystem.Repositories.UserRepository;
 import com.example.bussinessSystem.entities.User;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:63342")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     final UserRepository userRepo;
 
     public UserController(UserRepository userRepo) {
@@ -34,36 +38,79 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody User user){
+        try{
+            if (userRepo.existsByEmail(user.getEmail())) {
+                logger.warn("Email already exists: {}", user.getEmail());
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body(Map.of(
+                                "error", "EMAIL_EXISTS",
+                                "message", "Този email вече е регистриран!"
 
-        if (userRepo.existsByEmail(user.getEmail())) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Map.of(
-                            "error", "EMAIL_EXISTS",
-                            "message", "Този email вече е използван."
-                    ));
+                        ));
+                //throw new Exception("nsadandasdn");
+            }
+            if (userRepo.existsByPhoneNumber(user.getPhoneNumber())) {
+                logger.warn("Phone already exists: {}", user.getPhoneNumber());
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body(Map.of(
+                                "error", "PHONE_EXISTS",
+                                "message", "Този телефонен номер вече е регистриран!"
+                        ));
+            }
+            logger.info("Successfully added user: {}", user.getId());
+            User savedUser = userRepo.save(user);
+            return ResponseEntity.ok(savedUser);
+        }catch(Exception e){
+            logger.error(e.getMessage(), e);
+            return ResponseEntity.badRequest().build();
         }
-
-        if (userRepo.existsByPhoneNumber(user.getPhoneNumber())) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Map.of(
-                            "error", "PHONE_EXISTS",
-                            "message", "Този телефонен номер вече е използван."
-                    ));
-        }
-
-        User savedUser = userRepo.save(user);
-
-        return ResponseEntity.ok(savedUser);
     }
 
     //?
-    @PutMapping("/login/{id}")
-    public User loginUser(@RequestBody @PathVariable Long id ){
-        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginUser loginUser){
+        User user = userRepo.findByEmail(loginUser.getEmail()).orElse(null);
+
+//        System.out.println(loginUser.getEmail());
+//        System.out.println(loginUser.getPassword());
+//
+//        System.out.println(user);
+
+        if(user == null){
+            logger.warn("Email {} not found.", loginUser.getEmail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of(
+                            "message", "Не е намерен потребител с този имеейл.",
+                            "error", "INVALID_EMAIL"
+            ));
+        }
+        if(!user.getPassword().equals(loginUser.getPassword())){
+            logger.warn("Wrong password for {}", user.getId());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of(
+                            "error", "INVALID_PASSWORD",
+                            "message", "Грешна парола."
+                    ));
+        }
+
         user.setUpdatedAt(LocalDateTime.now());
-        return user;
+        userRepo.save(user);
+
+        logger.info("User {} logged in.", user.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Map.of(
+                        "message", "Входът е успешен!",
+                        "id", user.getId(),
+                        "name", user.getFirstName()
+                )
+        );
+//        return ResponseEntity.ok(Map.of(
+//                "message", "Входът е успешен!",
+//                "id", user.getId(),
+//                "name", user.getFirstName()
+//        ));
     }
 
     @PutMapping("/edit/{id}")
