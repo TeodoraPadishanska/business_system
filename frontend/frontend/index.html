@@ -39,6 +39,7 @@
                     </li>
                     <li>
                         <button class="nav-link" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
+                        <button id="profileBtn" style="display:none;">Профил</button>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link disabled" aria-disabled="true">About us</a>
@@ -345,6 +346,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="log-in-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -365,7 +367,7 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" onclick="login()">Вход</button>
+            <button type="button" class="btn btn-primary" onclick="login()">Вход</button>
         </form>
         <div class="dropdown-divider"></div>
             <a data-bs-toggle="modal" data-bs-target="#register-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">
