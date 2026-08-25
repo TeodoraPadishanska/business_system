@@ -8,23 +8,25 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class StockMovement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String product;
+    @ManyToOne
+    private Product product;
+
     private Long quantity;
 
     @Enumerated(EnumType.STRING)
     private MovementType movementType;
 
-    private String reason;
-    private String movedBy;
+    @ManyToOne
+    private User movedBy;
+
     private LocalDateTime movedAt_time = LocalDateTime.now();
 
 

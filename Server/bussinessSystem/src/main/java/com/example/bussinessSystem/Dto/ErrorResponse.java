@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderedItemsReq {
-    private Long productId;
-    private int quantity;
+public class ErrorResponse {
+    private String status;
+    private String message;
 }

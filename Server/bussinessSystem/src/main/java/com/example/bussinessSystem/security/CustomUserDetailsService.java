@@ -1,5 +1,6 @@
 package com.example.bussinessSystem.security;
 
+import com.example.bussinessSystem.Exception.ResourceNotFoundException;
 import com.example.bussinessSystem.Repositories.UserRepository;
 import com.example.bussinessSystem.entities.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,5 +28,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(user.getRoleUser().name())
                 .build();
+    }
+
+    public User loadUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException("User not found"));
     }
 }

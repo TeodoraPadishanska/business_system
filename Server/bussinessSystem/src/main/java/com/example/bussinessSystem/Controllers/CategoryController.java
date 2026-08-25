@@ -1,45 +1,42 @@
 package com.example.bussinessSystem.Controllers;
 
 import com.example.bussinessSystem.Repositories.CategoryRepository;
+import com.example.bussinessSystem.Services.CategoryService;
 import com.example.bussinessSystem.entities.Category;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/business/categories")
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:8000")
 public class CategoryController {
 
-    final CategoryRepository categoryRepo;
+    final CategoryService categoryService;
 
-    CategoryController(CategoryRepository categoryRepo){
-        this.categoryRepo = categoryRepo;
+    CategoryController(CategoryService categoryService){
+        this.categoryService = categoryService;
     }
 
     @GetMapping
-    public List<Category> getAllCategories(){
-        return categoryRepo.findAll();
+    public ResponseEntity<List<Category>> getAllCategories(){
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category){
-        return categoryRepo.save(category);
+    public ResponseEntity<?> createCategory(@RequestBody Category category){
+        return ResponseEntity.ok(categoryService.saveCategory(category));
     }
 
     @PutMapping("/{id}")
-    public Category editCategory(@RequestBody @PathVariable Long id, Category updatedCategory){
-        Category category = categoryRepo.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        category.setName(updatedCategory.getName() == null ? category.getName() : updatedCategory.getName());
-        category.setDescription(updatedCategory.getDescription() == null ? category.getDescription() : updatedCategory.getDescription());
-        return categoryRepo.save(category);
+    public ResponseEntity<?> editCategory(@RequestBody @PathVariable Long id, Category updatedCategory){
+        return ResponseEntity.ok(categoryService.editCategory(id,updatedCategory));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id){
-        if(!categoryRepo.existsById(id)){
-            throw new RuntimeException("Category not found!");
-        }
-        categoryRepo.deleteById(id);
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id){
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }

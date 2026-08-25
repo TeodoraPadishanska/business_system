@@ -1,14 +1,12 @@
 package com.example.bussinessSystem.Dto;
 
-import com.example.bussinessSystem.entities.OrderedItem;
-import com.example.bussinessSystem.entities.User;
 import com.example.bussinessSystem.enums.OrderStatus;
 import com.example.bussinessSystem.enums.PaymentStatus;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +15,8 @@ import static com.example.bussinessSystem.enums.OrderStatus.*;
 import static com.example.bussinessSystem.enums.PaymentStatus.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderReq {
     private Long userId;
 
