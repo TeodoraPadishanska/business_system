@@ -95,30 +95,35 @@ async function createAccount(){
         body: JSON.stringify(data)
     });
 
+    const responseJson = await res.json();
     if (res.ok) {
-        alert("Регистрацията е успешна!");
+        alert(responseJson.message);
+        // alert("Регистрацията е успешна!");
         let modal = bootstrap.Modal.getInstance(document.getElementById("register-modal"));
         modal.hide();
         document.getElementById("register-form").reset();
+        document.getElementById("email-register-error").innerHTML = "";
+        document.getElementById("phone-register-error").innerHTML = "";
+
+        localStorage.setItem("userId", responseJson.id);
+        localStorage.setItem("userFirstName", responseJson.firstName);
+        localStorage.setItem("userEmail", responseJson.email);
+        localStorage.setItem("userRole", responseJson.role);
         return;
     }
     if (res.status === 409) {
-        const data = await res.json();
-        if (data.error === "EMAIL_EXISTS") {
-            // alert("Този email вече е регистриран!");
+        if (responseJson.error === "EMAIL_EXISTS") {
             email.style.border = "2px solid red";
-            document.getElementById("email-register-error").innerHTML = data.message;
+            document.getElementById("email-register-error").innerHTML = responseJson.message;
         }else{
             email.style.border = "1px solid lightgray";
             document.getElementById("email-register-error").innerHTML = "";
         }
-        if (data.error === "PHONE_EXISTS") {
-            // alert("Този телефонен номер вече е регистриран!");
+        if (responseJson.error === "PHONE_EXISTS") {
             phoneNumber.style.border = "2px solid red";
-            document.getElementById("phone-register-error").innerHTML = data.message;
+            document.getElementById("phone-register-error").innerHTML = responseJson.message;
         }else{
             phoneNumber.style.border = "1px solid lightgray";
-            //?
             document.getElementById("phone-register-error").innerHTML = "";
         }
     }
@@ -133,6 +138,7 @@ async function login(){
         password:  password.value,
     }
 
+    console.log("hello1");
     const res = await fetch("http://localhost:8080/business/users/login", {
         method: 'POST',
         headers: {
@@ -142,18 +148,20 @@ async function login(){
     })
     const responseJson = await res.json();
 
-    if (res.ok) {
+    console.log("hello");
+
+    if(res.status === 401) {
+        if (responseJson.error === "INVALID_PASSWORD") {
+            alert(responseJson.message);
+        }else if(responseJson.error === "INVALID_EMAIL") {
+            alert(responseJson.message);
+        }
+    }else if(res.ok) {
         alert(responseJson.message);
         console.log(data.id);
         console.log(data.name);
         let modal = bootstrap.Modal.getInstance(document.getElementById("log-in-modal"));
         modal.hide();
         document.getElementById("log-in-form").reset();
-    }else if(res.status === 401) {
-        if (responseJson.error === "INVALID_PASSWORD") {
-            alert(responseJson.message);
-        }else if(responseJson.error === "INVALID_EMAIL") {
-            alert(responseJson.message);
-        }
     }
 }
