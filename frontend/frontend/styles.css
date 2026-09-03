@@ -1,5 +1,8 @@
+.colour-text{
+    color: rgb(254, 250, 224) !important;
+}
 .navbar{
-    background-color: rgb(53 136 50 / 0.55);
+    background-color: rgb(96, 108, 56);
 }
 header{
     display: flex;
@@ -7,16 +10,27 @@ header{
     justify-content: space-around;
     flex-direction: row;
 }
-.container-fluid{
+.container-fluid {
+    display: flex;
     align-items: center;
-    margin-left: 120px;
-    margin-right: 120px;
+    justify-content: center;
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 #navbarNavDropdown{
     align-items: center;
     margin-right: 120px;
     margin-left: 120px;
     justify-content: space-evenly;
+}
+#search-btn{
+    border-color: rgb(40, 54, 24);
+    font: 16px/0.5 "Roboto", sans-serif;
+    color: rgb(40, 54, 24);
+}
+#search-btn:hover{
+    background-color: rgb(40, 54, 24);
+    color: rgb(254, 250, 224) !important;
 }
 .second-container-fluid{
     border: rgba(188, 200, 186, 0.58) solid 1px;
@@ -27,9 +41,9 @@ header{
 }
 #categories-button{
     color: white;
-    background-color: rgb(43 136 39 / 0.81);
+    background-color: rgb(40, 54, 24);
     border-radius: 30px;
-    border: rgb(43 136 39 / 0.81);
+    border: rgb(40, 54, 24);
 }
 #categories-modal{
     background-color: rgb(203 203 203 / 0.55);
@@ -53,6 +67,12 @@ header{
 }
 .form-control{
     border-radius: 100px;
+}
+.icons-nav{
+    color: rgb(188, 108, 37);
+    width: 16px;
+    height : 16px;
+    fill : currentColor;
 }
 
 .cards-container{
@@ -501,16 +521,13 @@ hr{
     flex-direction: column;
     justify-content: center;
 }
-#cart-link{
+#cart-link-things{
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-content: center;
+    /*align-items: center;*/
     border-radius: 80px;
-    color: white;
-    background-color: rgb(62 146 59 / 1);
+    background-color: rgb(40, 54, 24);
     padding: 10px;
     gap: 10px;
-}
-#cart-total{
-    display: flex;
-    flex-direction: column;
 }
