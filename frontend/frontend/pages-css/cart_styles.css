@@ -10,13 +10,15 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-
-
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    padding: 10px;
 }
 .cart-product img{
     width: 10em;
     height: 10em;
     object-fit: fill;
+    border-radius: 15px;
 }
 
 .product-quantity-input{
