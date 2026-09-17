@@ -36,14 +36,14 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <a class="colour-text nav-link active" aria-current="page" href="#">♡</a>
+                                <a id="nav-fav" class="colour-text nav-link active " aria-current="page" href="#">♡</a>
                             </li>
                             <li>
-                                <button class="nav-link colour-text" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
-                                <button id="profileBtn" style="display:none;">Профил</button>
+                                <button id="loginBtn" class="nav-link colour-text" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
+                                <button id="profileBtn" class="colour-text" style="display:none;" onclick="window.location.href = 'profile.html'">Профил</button>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled colour-text" aria-disabled="true">About us</a>
+                                <a id="about-us" class="nav-link disabled colour-text" aria-disabled="true">About us</a>
                             </li>
                             <li class="nav-item">
                                 <a id="cart-link" class="colour-text nav-link" href="cart-view.html"><div id="cart-link-things"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -95,6 +95,11 @@
             </nav>
 
         <div id="cart-items"></div>
+        <div class="d-flex flex-row justify-content-end align-items-center m-5">
+            <h3 id="total-euro" class="me-4"></h3>
+            <a href="order.html" id="go-to-checkout-btn" class="btn btn-primary btn-lg">Go to Checkout</a>
+        </div>
+
     </div>
 
 
@@ -195,7 +200,8 @@
     </div>
 
     <script src="../pages-js/auth.js"></script>
+<!--    <script src="../pages-js/common.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="../pages-js/CartView.js"></script>
+    <script type="module" src="../pages-js/CartView.js"></script>
 </body>
 </html>
