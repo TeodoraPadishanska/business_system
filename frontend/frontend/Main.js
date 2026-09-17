@@ -1,7 +1,11 @@
+import { updateCartPrice, checkLoginStatus } from "./pages-js/common.js";
+
+checkLoginStatus();
+
 fetch("http://localhost:8080/business/products")
 .then(response => response.json())
 .then(products => {
-    let container = document.getElementById('promo-cards');
+    let container = document.getElementById('product-cards');
     container.innerHTML = ``;
 
     products.forEach(product => {
@@ -12,6 +16,8 @@ fetch("http://localhost:8080/business/products")
 
 })
 .catch(error => console.log(error));
+
+updateCartPrice();
 
 function calculateDiscount(product) {
     if (product.isOnSale == null){
@@ -63,6 +69,10 @@ async function addToCart(id){
         const responseJson = await res.json();
         alert(responseJson.message);
     }
+    await updateCartPrice();
+
+
 
 }
+
 

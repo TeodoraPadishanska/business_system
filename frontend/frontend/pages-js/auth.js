@@ -56,10 +56,11 @@ async function createAccount(){
         document.getElementById("email-register-error").innerHTML = "";
         document.getElementById("phone-register-error").innerHTML = "";
 
-        localStorage.setItem("userId", responseJson.id);
-        localStorage.setItem("userFirstName", responseJson.firstName);
-        localStorage.setItem("userEmail", responseJson.email);
-        localStorage.setItem("userRole", responseJson.role);
+        //imame firstName lastName phoneNumber email
+        // localStorage.setItem("userId", responseJson.id);
+        // localStorage.setItem("userFirstName", responseJson.firstName);
+        // localStorage.setItem("userEmail", responseJson.email);
+        // localStorage.setItem("userRole", responseJson.role);
         return;
     }
     if (res.status === 409) {
@@ -129,3 +130,6 @@ async function login(){
         alert(responseJson.message);
     }
 }
+
+
+

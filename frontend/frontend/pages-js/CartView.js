@@ -1,5 +1,11 @@
-const token = localStorage.getItem("token");
 
+import { updateCartPrice, checkLoginStatus, getCartPrice } from "./common.js";
+
+
+checkLoginStatus();
+updateCartPrice();
+
+const token = localStorage.getItem("token");
 
 async function loadCart() {
     await fetch("http://localhost:8080/business/cart", {
@@ -10,9 +16,8 @@ async function loadCart() {
     })
         .then(response => {
             if (response.status === 403 || response.status === 401) {
-                let forbiddenErrorMessage = document.createElement("div");
-                forbiddenErrorMessage.textContent = `Не сте влязли в профила си или сесията ви е изтекла.`;
-                document.getElementById("cart-items").appendChild(forbiddenErrorMessage);
+
+
                 throw new Error("UNAUTHORIZED");
             }
             if (!response.ok) {
@@ -22,15 +27,15 @@ async function loadCart() {
         })
         .then(data => {
 
-            // TODO: fix inconsistent sorting
-            data.sort((a, b) => {a.product.name.localeCompare(b.product.name);});
+
+            data.sort((a, b) => {return a.product.name.localeCompare(b.product.name);});
             console.log(data);
             console.log(data.items);
             let cartItemsDiv = document.getElementById('cart-items');
             cartItemsDiv.innerHTML = ``;
             if(data.length === 0) {
-                let forbiddenErrorMessage = document.createElement("div");
-                forbiddenErrorMessage.textContent = `Количката Ви е праззна.`;
+                let emptyCartMessage = document.createElement("h3");
+                emptyCartMessage.textContent = `Количката Ви е праззна.`;
                 let homeBtn = document.createElement("button");
                 homeBtn.className = "btn";
                 homeBtn.id="home-btn";
@@ -38,7 +43,7 @@ async function loadCart() {
                 homeBtn.addEventListener("click", () => {
                     window.location.href = "../index.html";
                 });
-                document.getElementById("cart-items").appendChild(forbiddenErrorMessage).appendChild(homeBtn);
+                document.getElementById("cart-items").appendChild(emptyCartMessage).appendChild(homeBtn);
             }else{
                 cartItemsDiv.innerHTML = ``;
                 data.forEach(product => {
@@ -47,9 +52,24 @@ async function loadCart() {
                 })
             }
         }).catch(error => console.log(error));
+
+        const totalEuro = await getCartPrice();
+        const totalEuroSpan = document.getElementById("total-euro");
+        totalEuroSpan.textContent = `${totalEuro} €`;
+        // TODO: add total and `Go to Checkout` button
+
 }
 
-loadCart();
+if(token){
+    loadCart();
+}
+else{
+    let notLoggedInMessage = document.createElement("div");
+    notLoggedInMessage.textContent = `Не сте влязли в профила си или сесията ви е изтекла.`;
+    document.getElementById("cart-items").appendChild(notLoggedInMessage);
+}
+
+
 
 
 function loadCartProduct(product) {
@@ -58,7 +78,7 @@ function loadCartProduct(product) {
     cartItem.innerHTML = `
         <div class="cart-product" id='cart-product-${product.product.id}'>
             <div>
-              <img class="cart-product-img me-4" src="${product.product.imgUrl}" alt="${product.name}">
+              <img class="cart-product-img mx-4" src="${product.product.imgUrl}" alt="${product.name}">
               <a class="product-name">${product.product.name}</a>
             </div>
           
@@ -75,7 +95,7 @@ function loadCartProduct(product) {
                 <div>
                     <span id="product-price-${product.product.id}">${(product.product.price * product.quantity).toPrecision(2)}</span>
                 </div>
-                <div id="cart-remove-item-btn"><button type="button" class="btn-close" onclick="removeProduct(${product.product.id})" aria-label="Close"></button></div>
+                <div><button id="cart-remove-item-btn" type="button" class="btn-close" onclick="removeProduct(${product.product.id})" aria-label="Close"></button></div>
             </div>
             
             
@@ -120,7 +140,45 @@ async function removeProduct(productId) {
     if (!response.status === 204) {
         alert(response.statusText);
     }else{
-        //TODO kogato nqma poveche produkti da ti pokazva suobshtenie bez da se prezarejda stranicata
+
+        product.parentElement.remove();
         product.remove();
+
+
+    }
+    await checkEmptyCart();
+}
+
+
+
+
+const checkEmptyCart  = async () => {
+    let items = document.querySelectorAll('.cart-item');
+
+    console.log(items);
+
+    if(items.length === 0){
+
+        const cartItemsDiv = document.getElementById('cart-items');
+        const message = document.createElement("h3");
+        message.id = "empty-cart-message";
+        message.textContent = "Количката Ви е празна.";
+
+        const homeBtn = document.createElement("button");
+        homeBtn.className = "btn";
+        homeBtn.id="home-btn";
+        homeBtn.innerHTML = "Начало";
+        homeBtn.addEventListener("click", () => {
+            window.location.href = "../index.html";
+        });
+
+        cartItemsDiv.appendChild(message).appendChild(homeBtn);
+    }
+    else{
+        const message = document.getElementById('empty-cart-message');
+        if(message){
+            message.remove();
+        }
     }
 }
+
