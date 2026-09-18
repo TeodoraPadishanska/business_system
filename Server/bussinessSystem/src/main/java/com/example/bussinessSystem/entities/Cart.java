@@ -22,4 +22,9 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
+
+    @Override
+    public String toString(){
+        return "Cart with id: " + id + " and user: " + user.getEmail();
+    }
 }

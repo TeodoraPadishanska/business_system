@@ -50,6 +50,11 @@ public class UserController {
         return ResponseEntity.ok(userService.loginUser(loginUser));
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<?> checkTokenStatus(){
+        return ResponseEntity.ok().build();
+    }
+
     //TODO метод за забравена парола
 
     @PutMapping("/edit/{id}")

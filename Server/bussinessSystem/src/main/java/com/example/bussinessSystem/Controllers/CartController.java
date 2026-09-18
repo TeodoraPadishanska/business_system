@@ -31,8 +31,14 @@ public class CartController {
     @GetMapping
     public ResponseEntity<?> getCart(@AuthenticationPrincipal UserDetails userDetails){
         User user = userDetailsService.loadUserByEmail(userDetails.getUsername());
-
         return ResponseEntity.ok(cartService.getCart(user.getId()).getItems());
+    }
+
+    @GetMapping("/value")
+    public ResponseEntity<?> getCartValue(@AuthenticationPrincipal UserDetails userDetails){
+        User user = userDetailsService.loadUserByEmail(userDetails.getUsername());
+
+        return ResponseEntity.ok(cartService.getCartValue(user.getId()));
     }
 
     @PostMapping("/{productId}")
@@ -56,7 +62,7 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.editQuantity(user.getId(), productId, quantity).getItems());
     }
 
-    // TODO: NESHTO GRYMNA
+
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> deleteCartItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long productId){
         User user = userDetailsService.loadUserByEmail(userDetails.getUsername());
