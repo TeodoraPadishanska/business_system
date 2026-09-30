@@ -11,6 +11,11 @@ fetch("http://localhost:8080/business/products")
     products.forEach(product => {
         const card = createProductCard(product);
         container.append(card);
+
+        const add_to_cart_btn = document.getElementById(`cart-add-btn-${product.id}`);
+        add_to_cart_btn.addEventListener("click", () => {
+            addToCart(product.id);
+        })
         console.log(product);
     })
 
@@ -50,7 +55,10 @@ function createProductCard(product) {
             </div>
         </div>
 
-    <button onclick="addToCart(${product.id})" class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>`;
+    <button id="cart-add-btn-${product.id}" class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>`;
+
+
+
     return card;
 }
 

@@ -1,0 +1,14 @@
+.cartItemsDiv div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+}
+.cartItemsDiv img{
+    height: 10vw;
+    width: 10vw;
+    border: lightgray 1px solid;
+    border-radius: 15px;
+    padding: 5px;
+}

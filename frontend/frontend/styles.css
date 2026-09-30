@@ -562,10 +562,13 @@ hr{
     box-shadow: 0 0 8px rgb(188, 108, 37);
     border-color: rgb(188, 108, 37);
 }
-#login-btn-modal,
-#register-btn-modal{
+.btn-style{
     background-color: rgb(221, 161, 94);
     border: 2px solid rgb(188, 108, 37);
+}
+.btn-style:hover{
+    background-color: rgb(188, 108, 37);
+    border-color: rgb(221, 161, 94);
 }
 #register-form input:focus{
     box-shadow: 0 0 8px rgb(188, 108, 37);
