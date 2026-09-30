@@ -52,9 +52,9 @@ export async function checkLoginStatus(){
                 console.log("Not Logged in");
                 profileBtn.style.display = "none";
                 loginBtn.style.display = "block";
+                localStorage.removeItem("token");
             }
         })
-//TODO iskam vmesto da pishe profil da e purvata bukva ot imeto
 
     }
 }
