@@ -29,6 +29,15 @@ public class Order {
     @Column(name = "order_status")
     private OrderStatus orderStatus;
 
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String company = "";
+    private String city;
+    private String country;
+    private String postalCode;
+    private String phoneNumber;
+
     private Double orderPrice;
     private LocalDateTime orderedOn_date;
     private String address;

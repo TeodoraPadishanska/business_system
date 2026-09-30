@@ -1,6 +1,6 @@
 package com.example.bussinessSystem.Services;
 
-import com.example.bussinessSystem.Dto.OrderReq;
+import com.example.bussinessSystem.Dto.OrderCreateRequest;
 import com.example.bussinessSystem.Dto.OrderedItemsReq;
 import com.example.bussinessSystem.Exception.ResourceNotFoundException;
 import com.example.bussinessSystem.Mappers.OrderMapper;
@@ -11,6 +11,8 @@ import com.example.bussinessSystem.entities.Order;
 import com.example.bussinessSystem.entities.OrderedItem;
 import com.example.bussinessSystem.entities.Product;
 import com.example.bussinessSystem.entities.User;
+import com.example.bussinessSystem.enums.OrderStatus;
+import com.example.bussinessSystem.enums.PaymentStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,19 +37,21 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+
+    // TODO: migrate to OrderResponseDto ??????
     public Order getOrderById(Long id){
         return orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
     }
 
-    public Order addOrder(OrderReq orderReq){
+    public Order addOrder(OrderCreateRequest orderReq, Long userId){
         Order order = orderMapper.OrderReqToOrder(orderReq);
-        User user = userRepository.findById(orderReq.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         order.setUser(user);
 
         List<OrderedItem> orderedProducts = new ArrayList<>();
-
+        double orderPrice = 0;
         for(OrderedItemsReq itemReq : orderReq.getItems()){
             OrderedItem item = new OrderedItem();
             Product product = productRepository.findById(itemReq.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -62,13 +66,21 @@ public class OrderService {
 
             product.setQuantityAtStock(product.getQuantityAtStock() - itemReq.getQuantity());
             orderedProducts.add(item);
+            orderPrice += product.getPrice() * itemReq.getQuantity();
 
         }
         order.setOrderedProducts(orderedProducts);
+        order.setOrderPrice(orderPrice);
+        order.setPaymentStatus(PaymentStatus.UNPAID);
+        order.setOrderStatus(OrderStatus.PENDING);
+
+        // TODO: order dates
+
         return order;
     }
 
-    public Order editOrder(Long id, OrderReq updatedOrder){
+    // FIXME: да се оправи с новото DTO
+    public Order editOrder(Long id, OrderCreateRequest updatedOrder){
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
         order.setOrderStatus(updatedOrder.getOrderStatus() == null ? order.getOrderStatus() : updatedOrder.getOrderStatus());
         order.setAddress(updatedOrder.getAddress() == null ? order.getAddress() : updatedOrder.getAddress());

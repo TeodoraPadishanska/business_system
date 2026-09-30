@@ -26,5 +26,10 @@ public class CartItem {
     @Min(1)
     private int quantity;
 
+    @Override
+    public String toString(){
+        return "CartItem with id: " + id + " and product id: " + product.getId();
+    }
+
 
 }
