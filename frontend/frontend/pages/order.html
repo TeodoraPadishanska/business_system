@@ -95,9 +95,9 @@
         </nav>
 
         <!--MAIN SECTION-->
-        <div class="d-flex flex-col container justify-content-around mt-5 mb-5">
+        <div id="main-section" class="d-flex flex-col container justify-content-around mt-5 mb-5">
             <div class="flex-fill me-5">
-                <form>
+                <form id="orderForm">
                     <div class="mb-4">
                         <h1>Customer Info</h1>
                         <label class="form-label" for="email">Email</label>
@@ -109,25 +109,25 @@
                         <h1>Shipping Address</h1>
 
                         <div class="d-flex flex-col justify-content-center align-items-center mt-4 mb-4">
-                            <input class="form-control me-5" id="first-name" placeholder="First Name" type="text">
-                            <input class="form-control" id="last" placeholder="First Name" type="text">
+                            <input class="form-control me-5" id="firstName" required placeholder="First Name" type="text">
+                            <input class="form-control" id="lastName" required placeholder="First Name" type="text">
                         </div>
 
                         <input class="form-control mb-4" id="company" placeholder="Company (optional)" type="text">
 
-                        <input class="form-control mb-4" id="address" placeholder="Address" type="text">
+                        <input class="form-control mb-4" id="address" required placeholder="Address" type="text">
 
-                        <input class="form-control mb-4" id="city" placeholder="City" type="text">
+                        <input class="form-control mb-4" id="city" required placeholder="City" type="text">
 
-                        <input class="form-control mb-4" id="country" placeholder="Country" type="text">
+                        <input class="form-control mb-4" id="country" required placeholder="Country" type="text">
 
-                        <input class="form-control mb-4" id="postal-code" placeholder="Postal Code" type="text">
+                        <input class="form-control mb-4" id="postalCode" required placeholder="Postal Code" type="text">
 
-                        <input class="form-control mb-4" id="phone" placeholder="Phone Number" type="text">
+                        <input class="form-control mb-4" id="phoneNumber" required placeholder="Phone Number" type="text">
 
                         <div class="d-flex flex-row justify-content-between align-items-center mt-3">
                             <a class="text-muted" href="cart-view.html">Return to Cart</a>
-                            <button id="order-btn" class="btn btn-primary btn-lg">ORDER</button>
+                            <button type="submit" id="order-btn" class="btn btn-style btn-lg">ORDER</button>
                         </div>
 
                     </div>
@@ -137,9 +137,14 @@
             <div class="flex-sm-fill ms-5">
                 <h1>Your Cart</h1>
 
-                <div class="border-top border-3 border-bottom" id="cart-items"></div>
+                <div class="border-top border-3 border-bottom" id="cart-items">
 
-                <h3 id="total-euro"></h3>
+                </div>
+
+                <div class="mt-3">
+
+                    <h3 id="total-euro">Total: </h3>
+                </div>
 
             </div>
 
@@ -184,7 +189,7 @@
                                 </label>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="login()">Вход</button>
+                        <button id="login-btn-modal" type="button" class="btn btn-primary btn-style" onclick="login()">Вход</button>
                     </form>
                     <div class="dropdown-divider"></div>
                     <a data-bs-toggle="modal" data-bs-target="#register-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">
