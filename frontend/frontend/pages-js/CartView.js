@@ -48,15 +48,20 @@ async function loadCart() {
                 cartItemsDiv.innerHTML = ``;
                 data.forEach(product => {
                     cartItemsDiv.append(loadCartProduct(product));
-                    console.log(product);
+
+                    const quantityInput = document.getElementById(`product-quantity-${product.product.id}`);
+                    quantityInput.addEventListener("change", () => {updateQuantity(product.product.id);});
                 })
+                const priseAndCheckOutBtn = document.getElementById("priseAndCheckOutBtn");
+                priseAndCheckOutBtn.innerHTML='';
+                priseAndCheckOutBtn.innerHTML='<h3 id="total-euro" class="me-4"></h3>\n' +
+                    '            <a href="order.html" id="go-to-checkout-btn" class="btn btn-style btn-lg" style="color: white">Go to Checkout</a>';
             }
         }).catch(error => console.log(error));
 
         const totalEuro = await getCartPrice();
         const totalEuroSpan = document.getElementById("total-euro");
         totalEuroSpan.textContent = `${totalEuro} €`;
-        // TODO: add total and `Go to Checkout` button
 
 }
 
@@ -64,7 +69,7 @@ if(token){
     loadCart();
 }
 else{
-    let notLoggedInMessage = document.createElement("div");
+    let notLoggedInMessage = document.createElement("h4");
     notLoggedInMessage.textContent = `Не сте влязли в профила си или сесията ви е изтекла.`;
     document.getElementById("cart-items").appendChild(notLoggedInMessage);
 }
@@ -79,27 +84,28 @@ function loadCartProduct(product) {
         <div class="cart-product" id='cart-product-${product.product.id}'>
             <div>
               <img class="cart-product-img mx-4" src="${product.product.imgUrl}" alt="${product.name}">
-              <a class="product-name">${product.product.name}</a>
+              <a style="text-decoration: none; color: black" class="product-name">${product.product.name}</a>
             </div>
           
             <div class="product-quantity">
-                <button class="btn product-quantity me-2"></button>
                     <input id="product-quantity-${product.product.id}" 
-                           class="product-quantity-input form-control" 
+                           class="product-quantity-input form-control me-4" 
                            type="number"  
                            min="1" 
                            value="${product.quantity}"
-                           onChange=updateQuantity(${product.product.id})                    
                     />
-                <button class="btn product-quantity"></button>
                 <div>
                     <span id="product-price-${product.product.id}">${(product.product.price * product.quantity).toPrecision(2)}</span>
                 </div>
+<!--                FIXME: add removeProduct with click eventListener -->
                 <div><button id="cart-remove-item-btn" type="button" class="btn-close" onclick="removeProduct(${product.product.id})" aria-label="Close"></button></div>
             </div>
             
-            
+                
         </div>`
+
+
+
     return cartItem;
 }
 
