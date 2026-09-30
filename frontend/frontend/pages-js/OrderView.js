@@ -1,7 +1,5 @@
 
-import { updateCartPrice, checkLoginStatus } from "./common.js";
-
-
+import {updateCartPrice, checkLoginStatus, getCartPrice} from "./common.js";
 checkLoginStatus();
 
 
