@@ -7,6 +7,7 @@ import com.example.bussinessSystem.Services.UserService;
 import com.example.bussinessSystem.entities.Order;
 import com.example.bussinessSystem.entities.User;
 import com.example.bussinessSystem.security.CustomUserDetailsService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,13 +32,14 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrders(){
         return ResponseEntity.ok(orderService.getAllOrders());
     }
+
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable Long id){
         return orderService.getOrderById(id);
     }
 
     @PostMapping
-    public Order createOrder(@AuthenticationPrincipal UserDetails userDetails, @RequestBody OrderCreateRequest orderReq){
+    public Order createOrder(@AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody OrderCreateRequest orderReq){
         User user = customUserDetailsService.loadUserByEmail(userDetails.getUsername());
         return orderService.addOrder(orderReq, user.getId());
     }

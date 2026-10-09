@@ -2,6 +2,7 @@ package com.example.bussinessSystem.entities;
 
 import com.example.bussinessSystem.enums.OrderStatus;
 import com.example.bussinessSystem.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
 
@@ -46,6 +48,7 @@ public class Order {
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderedItem> orderedProducts;
 
