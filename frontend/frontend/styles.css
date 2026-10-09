@@ -569,6 +569,7 @@ hr{
 .btn-style:hover{
     background-color: rgb(188, 108, 37);
     border-color: rgb(221, 161, 94);
+    color: white;
 }
 #register-form input:focus{
     box-shadow: 0 0 8px rgb(188, 108, 37);

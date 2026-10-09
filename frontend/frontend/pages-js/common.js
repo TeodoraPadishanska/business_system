@@ -9,19 +9,16 @@ export async function getCartPrice(){
             }
         });
 
-        return await cartTotalRes.json();
+        let cartPrice = await cartTotalRes.json();
+        console.log(cartPrice);
+        return cartPrice.toFixed(2);
     }
 }
 
 export async function updateCartPrice(){
-
     const cartTotalEuro = document.getElementById("cart-total-euro");
-
     const euroTotal = await getCartPrice();
-
     cartTotalEuro.textContent = `${euroTotal ? euroTotal : 0.00.toFixed(2)} €`;
-
-
 }
 
 
@@ -32,7 +29,7 @@ export async function checkLoginStatus(){
     console.log(token);
 
     if(token){
-        const response = fetch("http://localhost:8080/business/users/status", {
+        fetch("http://localhost:8080/business/users/status", {
             method: 'GET',
             headers: {
                 "Authorization": `Bearer ${token}`
