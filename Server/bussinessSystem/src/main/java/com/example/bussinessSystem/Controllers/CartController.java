@@ -9,6 +9,7 @@ import com.example.bussinessSystem.entities.User;
 import com.example.bussinessSystem.security.CustomUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,12 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final CartService cartService;
     private final CustomUserDetailsService userDetailsService;
-    private final ProductService productService;
 
     public CartController(CartService cartService, CustomUserDetailsService userDetailsService, ProductService productService){
         this.cartService = cartService;
         this.userDetailsService =userDetailsService;
-        this.productService = productService;
     }
 
     @GetMapping
@@ -42,10 +41,7 @@ public class CartController {
     }
 
     @PostMapping("/{productId}")
-    public ResponseEntity<?> addToCart(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long productId
-    ){
+    public ResponseEntity<?> addToCart(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long productId){
         User user = userDetailsService.loadUserByEmail(userDetails.getUsername());
 
         return ResponseEntity.ok().body(cartService.addItem(user.getId(),productId).getItems());

@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,9 @@ public class JwtUtil {
     @Value("${jwt.secret:UsRw95Jwm5cHAvJvOZv76s6jxn5nIpNLHo3awkjFo4k}")
     private String SECRET;
     private final long EXPIRATION = 1000 * 60 * 60 * 24;
+
+    @Autowired
+    private BlacklistedTokens blacklistedTokens;
 
     private SecretKey getSecretKey(){
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
@@ -39,6 +43,11 @@ public class JwtUtil {
     public boolean isTokenValid(String token){
         try{
             Jwts.parser().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
+
+            if(blacklistedTokens.isBlacklisted(token)){
+                return false;
+            }
+
             return true;
         } catch (JwtException e){
             return false;

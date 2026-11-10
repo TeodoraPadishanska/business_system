@@ -51,6 +51,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    // TO BE USED
+    @GetMapping("/{id}/name")
+    public ResponseEntity<String> getUsersName(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getUsersName(id));
+    }
+
     @GetMapping("/favourite")
     public ResponseEntity<?> getFavouriteProducts(@AuthenticationPrincipal UserDetails userDetails){
         String email = userDetails.getUsername();

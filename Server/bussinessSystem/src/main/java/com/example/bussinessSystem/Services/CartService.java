@@ -51,7 +51,7 @@ public class CartService {
     public Cart addItem(Long userId, Long itemId){
         Cart cart = getCart(userId);
 
-        Product product = productRepository.findById(itemId)
+        Product product = productRepository.findByIdAndDeletedFalse(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with id: " + itemId + " is not found!"));
 
         if(cart.getItems().stream().anyMatch(ci -> ci.getProduct().getId().equals(itemId))){
@@ -93,7 +93,7 @@ public class CartService {
             cartItem.get().setQuantity(quantity);
         }
         else{
-            Product product = productRepository.findById(productId)
+            Product product = productRepository.findByIdAndDeletedFalse(productId)
                     .orElseThrow(() -> new  ResourceNotFoundException("Product not found!"));
 
             CartItem newCartItem = new CartItem();
