@@ -1,8 +1,15 @@
 
-import {updateCartPrice, checkLoginStatus, getCartPrice, checkBackendHealth} from "./common.js";
+import {
+    updateCartPrice,
+    checkLoginStatusNavBtn,
+    getCartPrice,
+    checkBackendHealth,
+    checkAdminStatusNavBtn
+} from "./common.js";
 checkBackendHealth()
 
-checkLoginStatus();
+checkLoginStatusNavBtn();
+checkAdminStatusNavBtn();
 
 
 const token = localStorage.getItem("token");

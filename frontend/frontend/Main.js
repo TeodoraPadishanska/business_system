@@ -1,26 +1,69 @@
-import { updateCartPrice, checkLoginStatus } from "./pages-js/common.js";
+import {
+    updateCartPrice,
+    checkLoginStatusNavBtn,
+    checkBackendHealth,
+    checkAdminStatusNavBtn
+} from "./pages-js/common.js";
 
-checkLoginStatus();
+// checkBackendHealth();
 
-fetch("http://localhost:8080/business/products")
-.then(response => response.json())
-.then(products => {
-    let container = document.getElementById('product-cards');
-    container.innerHTML = ``;
+checkLoginStatusNavBtn();
+checkAdminStatusNavBtn();
 
-    products.forEach(product => {
-        const card = createProductCard(product);
-        container.append(card);
 
-        const add_to_cart_btn = document.getElementById(`cart-add-btn-${product.id}`);
-        add_to_cart_btn.addEventListener("click", () => {
-            addToCart(product.id);
-        })
-        console.log(product);
-    })
+async function loadProducts() {
+    const container = document.getElementById("product-cards");
+    container.innerHTML = "";
 
-})
-.catch(error => console.log(error));
+    try {
+        const response = await fetch("http://localhost:8080/business/products");
+
+        if (!response.ok) {
+            throw new Error(`Request failed: ${response.status}`);
+        }
+
+        const products = await response.json();
+
+        for (const product of products) {
+            const card = await createProductCard(product);
+            container.append(card);
+
+            const favoriteBtn =
+                document.getElementById(`favorite-btn-${product.id}`);
+
+            // The button may not exist when the user is logged out.
+            if (favoriteBtn) {
+                favoriteBtn.addEventListener("click", async () => {
+                    const result = await fetch(
+                        `http://localhost:8080/business/users/favourite/toggle/${product.id}`,
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                            },
+                        }
+                    );
+
+                    if (result.ok) {
+                        favoriteBtn.classList.toggle("favourite-btn-active");
+                    }
+                });
+            }
+
+            const cartBtn =
+                document.getElementById(`cart-add-btn-${product.id}`);
+
+            cartBtn.addEventListener("click", () => {
+                addToCart(product.id);
+            });
+        }
+    } catch (error) {
+        console.error("Could not load products:", error);
+    }
+}
+
+
+loadProducts();
 
 updateCartPrice();
 
@@ -33,15 +76,27 @@ function calculateDiscount(product) {
     }
     return 0;
 }
-function createProductCard(product) {
+
+async function createProductCard(product) {
     const card = document.createElement('div');
-    const discount = calculateDiscount(product)
+    // const discount = calculateDiscount(product)
     card.className = 'card';
     card.style.width = '18rem';
 
+    let isFavourite;
+    const token = localStorage.getItem("token");
+    if (token){
+        const favourites= await getFavourites();
+        const favoriteIds = favourites.map(item => item.id);
+
+        console.log(favourites);
+
+        isFavourite=favoriteIds.includes(product.id);
+    }
+
     card.innerHTML = `
         ${product.isOnSale ? `<span class = "discount">- ${discount}%</span>` : ""}
-        <button class="favourite-btn">♡</button>
+        ${token ? `<button id="favorite-btn-${product.id}" class="favourite-btn ${isFavourite ? "favourite-btn-active" : ""}">♥</button>`:""}
         <img class="card-img-top" src="${product.imgUrl}" alt="${product.name}">
         <div class="card-body">
             <h5 class="card-title">${product.name}</h5>
@@ -49,15 +104,13 @@ function createProductCard(product) {
         <div class="price-container">
             <div class="price-row">
                 <span class="new-price">
-                    ${product.isOnSale ? product.salePrice : product.price}&nbsp;€
+                    ${(product.isOnSale ? product.salePrice : product.price).toFixed(2)}&nbsp;€
                 </span>
                 ${product.isOnSale ? `<s class="old-price">${product.price}&nbsp;€</s>` : ""}
             </div>
         </div>
 
     <button id="cart-add-btn-${product.id}" class="add_item btn btn-outline-dark" style="margin: 12px">Добави</button>`;
-
-
 
     return card;
 }
@@ -73,10 +126,37 @@ async function addToCart(productId){
 
     });
 
-    if(!res.ok){
-        const responseJson = await res.json();
-        alert(responseJson.message);
+    if(res.status === 403){
+        alert("Влезте в профила си.");
+        return;
     }
+    showAddToCartMessage()
     await updateCartPrice();
 }
+
+function showAddToCartMessage(){
+
+    const toastElement = document.getElementById("cart-toast");
+
+    const toast = bootstrap.Toast.getOrCreateInstance(toastElement, {
+        delay: 3000
+    })
+    toast.show();
+}
+
+
+async function getFavourites() {
+    const response = await fetch("http://localhost:8080/business/users/favourite", {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+
+    if (response.ok) {
+        return response.json();
+    }
+    return {};
+}
+
 

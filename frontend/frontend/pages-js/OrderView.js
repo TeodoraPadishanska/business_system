@@ -1,27 +1,56 @@
-import { getOrderViewId } from "./common.js";
+import {checkAdminStatusNavBtn, checkLoginStatusNavBtn, getOrderViewId, updateCartPrice} from "./common.js";
+
+updateCartPrice();
+checkLoginStatusNavBtn();
+checkAdminStatusNavBtn();
 
 const orderId = getOrderViewId();
 const token = localStorage.getItem("token");
 
 async function loadOrder(){
+    const orderDiv = document.createElement("div");
+    orderDiv.innerHTML = "";
 
     await fetch(`http://localhost:8080/business/orders/${orderId}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
         }
-    }).then((response) => {return response.json()}).then((order) => {
-        console.log(order)
-        const orderDiv = document.createElement("div");
+    }).then(res => {
+        if(res.status === 200) {
+            return res.json();
+        }else{
+            orderDiv.innerHTML = `
+                <h3>Not logged in</h3>
+            `;
+            orderDiv.style.textAlign = "center";
+            document.getElementById("order-info").appendChild(orderDiv);
+        }
+    }).then((order) => {
+        const iso = order.orderedOn_date;
+        const [year, month, day] = iso.slice(0, 10).split("-");
+        const [hour, minute] = iso.slice(11, 17).split(":");
+
+        const formattedDate = `${day}.${month}.${year}`;
+        const formattedTime = `${hour}:${minute}`;
+
+        let formattedExpected = "TBD"
+        if(order.expectedDelivery){
+            formattedExpected = order.expectedDelivery.split("-").reverse().join(".");
+        }
+
+
+
         orderDiv.innerHTML = `
-        <h3>${order.id}</h3>
+        <h3>Order number:  #${String(order.id).padStart(5, '0')}</h3>
         <p>${order.firstName} ${order.lastName}</p>
-        <p>${order.orderedOn_date}</p>
+        <p>${formattedDate} ${formattedTime}</p>
+        <hr>
         <div>
             <p>Status: </p>
             <p>${order.orderStatus}</p>
             <p>Date of delivery: </p>
-            <p>${order.expectedDelivery}</p>
+            <p>${formattedExpected}</p>
             <p>Delivered to: </p>
             <p>${order.address}</p>
             <p class="fw-bold">Total: </p>
@@ -39,7 +68,7 @@ async function loadOrder(){
                 <div>
                     <p class="fw-bold">${product.product.name}</p>
                     <p>Unit price: </p>
-                    <p>${product.product.price}</p>
+                    <p>${product.price}</p>
                     <p>Quantity: </p>
                     <p>${product.quantity}</p>
                 </div>
