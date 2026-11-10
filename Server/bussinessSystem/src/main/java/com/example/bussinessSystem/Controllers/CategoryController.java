@@ -4,6 +4,7 @@ import com.example.bussinessSystem.Repositories.CategoryRepository;
 import com.example.bussinessSystem.Services.CategoryService;
 import com.example.bussinessSystem.entities.Category;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,16 +25,19 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createCategory(@RequestBody Category category){
         return ResponseEntity.ok(categoryService.saveCategory(category));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> editCategory(@RequestBody @PathVariable Long id, Category updatedCategory){
         return ResponseEntity.ok(categoryService.editCategory(id,updatedCategory));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);

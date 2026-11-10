@@ -28,7 +28,8 @@ public class OrderController {
         this.customUserDetailsService = customUserDetailsService;
     }
 
-    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
     public ResponseEntity<List<Order>> getAllOrders(){
         return ResponseEntity.ok(orderService.getAllOrders());
     }
@@ -44,9 +45,10 @@ public class OrderController {
         return orderService.addOrder(orderReq, user.getId());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public Order editOrder(@PathVariable Long id, @RequestBody OrderCreateRequest updatedOrder){
-        return orderService.editOrder(id,updatedOrder);
+    public ResponseEntity<Order> editOrder(@PathVariable Long id, @Valid @RequestBody OrderUpdateRequest updatedOrder){
+        return ResponseEntity.ok(orderService.editOrder(id,updatedOrder));
     }
 
 }
