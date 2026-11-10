@@ -3,6 +3,7 @@ package com.example.bussinessSystem.Services;
 import com.example.bussinessSystem.Dto.ProductReq;
 import com.example.bussinessSystem.Exception.ResourceNotFoundException;
 import com.example.bussinessSystem.Mappers.ProductMapper;
+import com.example.bussinessSystem.Repositories.CartRepository;
 import com.example.bussinessSystem.Repositories.CategoryRepository;
 import com.example.bussinessSystem.Repositories.ProductRepository;
 import com.example.bussinessSystem.entities.Category;
@@ -17,19 +18,21 @@ public class ProductService {
     final ProductRepository productRepository;
     final CategoryRepository categoryRepository;
     final ProductMapper productMapper;
+    final CartRepository cartRepository;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductMapper productMapper, CartRepository cartRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.productMapper = productMapper;
+        this.cartRepository = cartRepository;
     }
 
-    public List<Product> getAllUsers(){
-        return productRepository.findAll();
+    public List<Product> getAllProducts(){
+        return productRepository.findByDeletedFalse();
     }
 
     public Product getProductById(Long id){
-        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        return productRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
     public Product createProduct(ProductReq productReq){
@@ -43,7 +46,7 @@ public class ProductService {
     }
 
     public Product editProduct(Long id, ProductReq productReq){
-        Product product = productRepository.findById(id).orElseThrow(() ->  new RuntimeException("Product not found"));
+        Product product = productRepository.findByIdAndDeletedFalse(id).orElseThrow(() ->  new RuntimeException("Product not found"));
         product.setName(productReq.getName()  == null ? product.getName() : productReq.getName());
         product.setWeightQuantity(productReq.getWeightQuantity() == null ? product.getWeightQuantity() : productReq.getWeightQuantity());
         product.setPrice(productReq.getPrice() == null ? product.getPrice() : productReq.getPrice());
@@ -61,6 +64,13 @@ public class ProductService {
         if(!productRepository.existsById(id)){
             throw new ResourceNotFoundException("Product not found.");
         }
+
+        cartRepository.findAll().forEach(cart -> {
+            cart.getItems().removeIf(ci -> ci.getProduct().getId().equals(id));
+
+            cartRepository.save(cart);
+        });
+
         productRepository.deleteById(id);
     }
 

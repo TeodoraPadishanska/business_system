@@ -2,6 +2,8 @@ package com.example.bussinessSystem.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "product")
+@SQLDelete(sql = "UPDATE product SET deleted = true WHERE id = ?")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +38,8 @@ public class Product {
     private Boolean isOnSale;
     private Double salePrice;
     private String imgUrl;
+
+    private boolean deleted = false;
 
 
     public void setQuantityAtStock(Long quantityAtStock){
