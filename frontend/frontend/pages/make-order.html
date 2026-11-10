@@ -101,7 +101,7 @@
                     <div class="mb-4">
                         <h1>Customer Info</h1>
                         <label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" placeholder="ivan@abv.bg">
+                        <input class="form-control" type="email" id="email" required placeholder="ivan@abv.bg">
                     </div>
 
 
@@ -160,10 +160,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div id="menu" class="modal-body">
-                        <a href="categrgory.html"><img src="../images/categories/vegetables-fruits.png">Плодове и зеленчуци</a>
-                        <a href="categrgory.html"><img src="../images/categories/meat.png">Месо и риба</a>
-                        <a href="categrgory.html"><img src="../images/categories/eggs.png">Млечни и яйца</a>
-                        <a href="categrgory.html"><img src="../images/categories/delicates.png">Колбаси и деликатеси</a>
+                        <a href="categrgory.html">
+                            <img src="../images/categories/vegetables-fruits.png" alt="vegetables and fruits">
+                            Плодове и зеленчуци
+                        </a>
+                        <a href="categrgory.html">
+                            <img src="../images/categories/meat.png" alt="meat and fish">
+                            Месо и риба
+                        </a>
+                        <a href="categrgory.html">
+                            <img src="../images/categories/eggs.png" alt="dairy and eggs">
+                            Млечни и яйца
+                        </a>
+                        <a href="categrgory.html">
+                            <img src="../images/categories/delicates.png" alt="delicacies">
+                            Колбаси и деликатеси
+                        </a>
                     </div>
                 </div>
             </div>
@@ -250,7 +262,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../pages-js/auth.js"></script>
-<script type="module" src="../pages-js/OrderView.js"></script>
+<script src="../pages-js/common.js"></script>
+<script type="module" src="../pages-js/MakeOrderView.js"></script>
 
 </body>
 </html>

@@ -62,10 +62,10 @@ function createProductCard(product) {
     return card;
 }
 
-async function addToCart(id){
-    console.log(id);
+async function addToCart(productId){
+    console.log(productId);
 
-    const res = await fetch(`http://localhost:8080/business/cart/${id}`, {
+    const res = await fetch(`http://localhost:8080/business/cart/${productId}`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -78,9 +78,5 @@ async function addToCart(id){
         alert(responseJson.message);
     }
     await updateCartPrice();
-
-
-
 }
-
 

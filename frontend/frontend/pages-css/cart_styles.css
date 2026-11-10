@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: center;
 }
-#cart-remove-item-btn{
+.cart-remove-item-btn{
     margin-left: 10vw;
 }
 #home-btn {

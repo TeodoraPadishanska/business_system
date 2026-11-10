@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <div id="cart-main=div">
+    <div id="cart-main-div">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <header>
@@ -97,7 +97,7 @@
         <div id="cart-items"></div>
         <div class="d-flex flex-row justify-content-end align-items-center m-5" id="priseAndCheckOutBtn"></div>
 
-    </div>
+        </div>
 
 
     <!--modals-->
@@ -109,10 +109,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="menu" class="modal-body">
-                    <a href="categrgory.html"><img src="../images/categories/vegetables-fruits.png">Плодове и зеленчуци</a>
-                    <a href="categrgory.html"><img src="../images/categories/meat.png">Месо и риба</a>
-                    <a href="categrgory.html"><img src="../images/categories/eggs.png">Млечни и яйца</a>
-                    <a href="categrgory.html"><img src="../images/categories/delicates.png">Колбаси и деликатеси</a>
+                    <a href="categrgory.html">
+                        <img src="../images/categories/vegetables-fruits.png" alt="vegetables and fruits">
+                        Плодове и зеленчуци
+                    </a>
+                    <a href="categrgory.html">
+                        <img src="../images/categories/meat.png" alt="meat and fish">
+                        Месо и риба
+                    </a>
+                    <a href="categrgory.html">
+                        <img src="../images/categories/eggs.png" alt="dairy and eggs">
+                        Млечни и яйца
+                    </a>
+                    <a href="categrgory.html">
+                        <img src="../images/categories/delicates.png" alt="delicacies">
+                        Колбаси и деликатеси
+                    </a>
                 </div>
             </div>
         </div>
@@ -138,7 +150,7 @@
                             </label>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="login()">Вход</button>
+                    <button type="button" class="btn btn-style" onclick="login()">Вход</button>
                 </form>
                 <div class="dropdown-divider"></div>
                 <a data-bs-toggle="modal" data-bs-target="#register-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px">

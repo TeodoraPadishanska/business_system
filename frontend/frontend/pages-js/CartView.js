@@ -45,7 +45,6 @@ async function loadCart() {
                 });
                 document.getElementById("cart-items").appendChild(emptyCartMessage).appendChild(homeBtn);
             }else{
-                cartItemsDiv.innerHTML = ``;
                 data.forEach(product => {
                     cartItemsDiv.append(loadCartProduct(product));
 
@@ -54,14 +53,16 @@ async function loadCart() {
                 })
                 const priseAndCheckOutBtn = document.getElementById("priseAndCheckOutBtn");
                 priseAndCheckOutBtn.innerHTML='';
-                priseAndCheckOutBtn.innerHTML='<h3 id="total-euro" class="me-4"></h3>\n' +
-                    '            <a href="order.html" id="go-to-checkout-btn" class="btn btn-style btn-lg" style="color: white">Go to Checkout</a>';
+                priseAndCheckOutBtn.innerHTML='<h3 id="cart-products-total-price" class="me-4"></h3>\n' +
+                    '            <a href="make-order.html" id="go-to-checkout-btn" class="btn btn-style btn-lg" style="color: white">Go to Checkout</a>';
             }
         }).catch(error => console.log(error));
 
         const totalEuro = await getCartPrice();
-        const totalEuroSpan = document.getElementById("total-euro");
-        totalEuroSpan.textContent = `${totalEuro} €`;
+        const totalEuroSpan = document.getElementById("cart-products-total-price");
+        if (totalEuroSpan){
+            totalEuroSpan.textContent = `${totalEuro} €`;
+        }
 
 }
 
@@ -83,7 +84,7 @@ function loadCartProduct(product) {
     cartItem.innerHTML = `
         <div class="cart-product" id='cart-product-${product.product.id}'>
             <div>
-              <img class="cart-product-img mx-4" src="${product.product.imgUrl}" alt="${product.name}">
+              <img class="cart-product-img mx-4" src="${product.product.imgUrl}" alt="${product.product.name}">
               <a style="text-decoration: none; color: black" class="product-name">${product.product.name}</a>
             </div>
           
@@ -95,16 +96,14 @@ function loadCartProduct(product) {
                            value="${product.quantity}"
                     />
                 <div>
-                    <span id="product-price-${product.product.id}">${(product.product.price * product.quantity).toPrecision(2)}</span>
+                    <span id="product-price-${product.product.id}">${(product.product.price * product.quantity).toFixed(2)}</span>
                 </div>
-<!--                FIXME: add removeProduct with click eventListener -->
-                <div><button id="cart-remove-item-btn" type="button" class="btn-close" onclick="removeProduct(${product.product.id})" aria-label="Close"></button></div>
-            </div>
-            
-                
+                <div><button type="button" class="btn-close cart-remove-item-btn" aria-label="Close"></button></div>
+            </div>              
         </div>`
 
-
+    const removeProductBtn = cartItem.querySelector(".cart-remove-item-btn");
+    removeProductBtn.addEventListener("click", () => {removeProduct(product.product.id)});
 
     return cartItem;
 }
@@ -131,7 +130,13 @@ async function updateQuantity(productId){
     const product = items.filter(ci => ci.product.id === productId)[0];
     console.log(product);
 
-    productPrice.textContent = (product.product.price * product.quantity).toPrecision(2);
+    productPrice.textContent = (product.product.price * product.quantity).toFixed(2);
+    const totalEuro = await getCartPrice();
+    const totalEuroSpan = document.getElementById("cart-products-total-price");
+    if (totalEuroSpan){
+        totalEuroSpan.textContent = `${totalEuro} €`;
+    }
+    updateCartPrice()
 
 }
 
@@ -143,15 +148,16 @@ async function removeProduct(productId) {
             Authorization: `Bearer ${token}`,
         }
     });
-    if (!response.status === 204) {
+    if (response.status !== 204) {
         alert(response.statusText);
     }else{
-
         product.parentElement.remove();
-        product.remove();
-
-
     }
+
+    const totalEuroSpan = document.getElementById("cart-products-total-price");
+    totalEuroSpan.textContent = await getCartPrice();
+
+    await updateCartPrice();
     await checkEmptyCart();
 }
 
@@ -177,7 +183,8 @@ const checkEmptyCart  = async () => {
         homeBtn.addEventListener("click", () => {
             window.location.href = "../index.html";
         });
-
+        const totalEuroSpan = document.getElementById("cart-products-total-price");
+        totalEuroSpan.innerHTML='';
         cartItemsDiv.appendChild(message).appendChild(homeBtn);
     }
     else{
