@@ -1,6 +1,7 @@
 package com.example.bussinessSystem.Services;
 
 import com.example.bussinessSystem.Dto.OrderCreateRequest;
+import com.example.bussinessSystem.Dto.OrderUpdateRequest;
 import com.example.bussinessSystem.Dto.OrderedItemsReq;
 import com.example.bussinessSystem.Exception.ResourceNotFoundException;
 import com.example.bussinessSystem.Mappers.OrderMapper;
@@ -14,8 +15,11 @@ import com.example.bussinessSystem.entities.Product;
 import com.example.bussinessSystem.entities.User;
 import com.example.bussinessSystem.enums.OrderStatus;
 import com.example.bussinessSystem.enums.PaymentStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,23 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getAllOrdersByUser(Long userId){
+        return orderRepository.findAllByUserId(userId);
+    }
+
+    public List<OrderedItem> getOrderItems(User user,Long orderId){
+        var order =  orderRepository.findById(orderId)
+                .orElseThrow(()-> new ResourceNotFoundException("Order not found."));
+
+
+        if(order.getUser().getId().equals(user.getId())){
+            return order.getOrderedProducts();
+        }
+        else{
+            throw new AccessDeniedException("Order does not belong to this user.");
+        }
+    }
+
 
     public Order getOrderById(Long id){
         return orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
@@ -59,10 +80,11 @@ public class OrderService {
         double orderPrice = 0;
         for(var cartItem : cartItems){
             OrderedItem item = new OrderedItem();
-            Product product = productRepository.findById(cartItem.getProduct().getId()).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+            Product product = productRepository.findByIdAndDeletedFalse(cartItem.getProduct().getId()).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
             item.setOrder(order);
             item.setProduct(product);
+            item.setPrice(product.getPrice());
 
             if(product.getQuantityAtStock() < cartItem.getQuantity()){
                 throw new RuntimeException("Not enough products at stock");
@@ -75,9 +97,6 @@ public class OrderService {
             orderPrice += product.getPrice() * cartItem.getQuantity();
 
         }
-
-
-
 
         order.setOrderedProducts(orderedProducts);
         order.setOrderPrice(orderPrice);
@@ -95,6 +114,9 @@ public class OrderService {
         order.setAddress(order.getAddress());
         order.setOrderedOn_date(LocalDateTime.now());
 
+        // TODO: smeni go
+        order.setExpectedDelivery(order.getOrderedOn_date().toLocalDate().plusDays(5));
+
         orderRepository.save(order);
         cart.getItems().clear();
         cartRepository.save(cart);
@@ -102,18 +124,33 @@ public class OrderService {
         return order;
     }
 
-    public Order editOrder(Long id, OrderCreateRequest updatedOrder){
-        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
+    public Order editOrder(Long id, OrderUpdateRequest updatedOrder) {
 
-        order.setCity(updatedOrder.getCity() == null ? order.getCity() : updatedOrder.getCity());
-        order.setCountry(updatedOrder.getCountry() == null ? order.getCountry() : updatedOrder.getCountry());
-        order.setCompany(updatedOrder.getCompany() == null ? order.getCompany(): updatedOrder.getCompany());
-        order.setEmail(updatedOrder.getEmail() == null ? order.getEmail() : updatedOrder.getEmail());
-        order.setFirstName(updatedOrder.getFirstName() == null ? order.getFirstName() : updatedOrder.getFirstName());
-        order.setLastName(updatedOrder.getLastName() == null ? order.getLastName() : updatedOrder.getLastName());
-        order.setPhoneNumber(updatedOrder.getPhoneNumber() == null ? order.getPhoneNumber() : updatedOrder.getPhoneNumber());
-        order.setPostalCode(updatedOrder.getPostalCode() == null ? order.getPostalCode() : updatedOrder.getPostalCode());
-        order.setAddress(updatedOrder.getAddress() == null ? order.getAddress() : updatedOrder.getAddress());
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found."));
+
+        // Customer information
+        order.setEmail(updatedOrder.getEmail());
+        order.setFirstName(updatedOrder.getFirstName());
+        order.setLastName(updatedOrder.getLastName());
+        order.setCompany(updatedOrder.getCompany() == null ? "" : updatedOrder.getCompany());
+        order.setPhoneNumber(updatedOrder.getPhoneNumber());
+
+        // Delivery information
+        order.setAddress(updatedOrder.getAddress());
+        order.setCity(updatedOrder.getCity());
+        order.setCountry(updatedOrder.getCountry());
+        order.setPostalCode(updatedOrder.getPostalCode());
+        order.setExpectedDelivery(updatedOrder.getExpectedDelivery());
+
+        // Order information
+        order.setOrderStatus(updatedOrder.getOrderStatus());
+        order.setPaymentStatus(updatedOrder.getPaymentStatus());
+
         return orderRepository.save(order);
+    }
+
+    public void deleteOrder(Long id) {
+        orderRepository.deleteById(id);
     }
 }

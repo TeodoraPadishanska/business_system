@@ -14,7 +14,10 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+
+@Getter
+@Setter
+
 @Table(name = "orders")
 
 public class Order {
@@ -42,20 +45,27 @@ public class Order {
 
     private Double orderPrice;
     private LocalDateTime orderedOn_date;
+
+    private LocalDate expectedDelivery;
     private String address;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderedItem> orderedProducts;
 
     @PrePersist
     public void prePersist() {
         orderedOn_date = LocalDateTime.now();
+
         if (orderStatus == null) orderStatus = OrderStatus.PENDING;
         if (paymentStatus == null) paymentStatus = PaymentStatus.UNPAID;
+
+        if (orderPrice != null) {
+            orderPrice = Math.round(orderPrice * 100.0) / 100.0;
+        }
     }
 }

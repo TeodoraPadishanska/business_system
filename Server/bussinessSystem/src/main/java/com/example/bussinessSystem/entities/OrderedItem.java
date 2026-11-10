@@ -1,6 +1,7 @@
 package com.example.bussinessSystem.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class OrderedItem {
 
     @Id
@@ -16,9 +18,11 @@ public class OrderedItem {
 
     @ManyToOne
     private Product product;
-
     private int quantity;
 
+    private double price;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
