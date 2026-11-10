@@ -12,6 +12,8 @@ public class UserMapper {
 
     public UserResponse userToUserResponse(User user){
         UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setRoleUser(user.getRoleUser());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setEmail(user.getEmail());

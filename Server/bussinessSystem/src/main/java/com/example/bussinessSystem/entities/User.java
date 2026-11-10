@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,6 +41,10 @@ public class User {
     @Column(updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+
+    @OneToMany
+    private List<Product> favourites;
 
     @PrePersist
     public void prePersist() {

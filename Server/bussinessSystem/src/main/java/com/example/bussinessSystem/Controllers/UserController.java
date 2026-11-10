@@ -40,6 +40,39 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @GetMapping("/favourite")
+    public ResponseEntity<?> getFavouriteProducts(@AuthenticationPrincipal UserDetails userDetails){
+        String email = userDetails.getUsername();
+        return ResponseEntity.ok(userService.getFavouriteProducts(email));
+    }
+
+    @PostMapping("/favourite/add/{productId}")
+    public ResponseEntity<?> addToFavouriteProducts(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long productId
+    ){
+        String email = userDetails.getUsername();
+        return ResponseEntity.ok(userService.addToFavouriteProducts(email, productId));
+    }
+
+    @PostMapping("/favourite/toggle/{productId}")
+    public ResponseEntity<?> toggleFavouriteProduct(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long productId
+    ){
+        String email = userDetails.getUsername();
+        return ResponseEntity.ok(userService.toggleFavouriteProduct(email, productId));
+    }
+
+    @PostMapping("/favourite/remove/{productId}")
+    public ResponseEntity<?> removeFromFavouriteProducts(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long productId
+    ){
+        String email = userDetails.getUsername();
+        return ResponseEntity.ok(userService.removeFromFavouriteProducts(email, productId));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.addUser(user));
