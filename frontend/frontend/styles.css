@@ -2,7 +2,7 @@
     color: rgb(254, 250, 224) !important;
 }
 .navbar{
-    background-color: rgb(96, 108, 56);
+    background-color: rgb(36 112 107);
 }
 header{
     display: flex;
@@ -24,12 +24,12 @@ header{
     justify-content: space-evenly;
 }
 #search-btn{
-    border-color: rgb(40, 54, 24);
+    border-color: rgb(26 71 72);
     font: 16px/0.5 "Roboto", sans-serif;
-    color: rgb(40, 54, 24);
+    color: rgb(26 71 72);
 }
 #search-btn:hover{
-    background-color: rgb(40, 54, 24);
+    background-color: rgb(26 71 72);
     color: rgb(254, 250, 224) !important;
 }
 .second-container-fluid{
@@ -41,9 +41,9 @@ header{
 }
 #categories-button{
     color: white;
-    background-color: rgb(40, 54, 24);
+    background-color: rgb(26 71 72);
     border-radius: 30px;
-    border: rgb(40, 54, 24);
+    border: rgb(26 71 72);
 }
 #categories-modal{
     background-color: rgb(203 203 203 / 0.55);
@@ -192,6 +192,7 @@ header{
     font-size: x-small;
 }
 .favourite-btn{
+    color: rgb(124 124 124 / 0.97);
     position:absolute;
     margin-top:15px;
     right:15px;
@@ -199,7 +200,23 @@ header{
     background:none;
     font-size:28px;
     cursor:pointer;
+    transform: scale(1);
+    transition: transform .2s;
+
 }
+
+.favourite-btn:hover{
+    transform: scale(1.10);
+}
+
+.favourite-btn:active {
+    transform: scale(0.90);
+}
+
+.favourite-btn-active{
+    color: red;
+}
+
 .weight{
     border-radius: 30px;
     border: 1px solid darkslategray;
@@ -393,9 +410,7 @@ hr{
     color: grey;
     font: bold 14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-#instagram{
-    height: 20px;
-}
+
 #follow-us{
     display: flex;
     flex-direction: row;
@@ -523,7 +538,7 @@ hr{
     align-content: center;
     /*align-items: center;*/
     border-radius: 80px;
-    background-color: rgb(40, 54, 24);
+    background-color: rgb(26 71 72);
     padding: 10px;
     gap: 10px;
 }
@@ -565,6 +580,8 @@ hr{
 .btn-style{
     background-color: rgb(221, 161, 94);
     border: 2px solid rgb(188, 108, 37);
+    border-radius: 15px;
+    color: white;
 }
 .btn-style:hover{
     background-color: rgb(188, 108, 37);
@@ -574,4 +591,34 @@ hr{
 #register-form input:focus{
     box-shadow: 0 0 8px rgb(188, 108, 37);
     border-color: rgb(188, 108, 37);
+}
+
+
+.yellow {
+    background: rgb(253 199 0);
+    color: rgb(255 255 255);
+}
+.green{
+    background: rgb(0 176 89);
+    color: rgb(248 244 232);
+}
+.light-blue{
+    background: rgb(0 179 246);
+    color: rgb(251 249 241);
+}
+.blue{
+    background: rgb(118 63 253);
+    color: rgb(253 243 243);
+}
+.red{
+    background: rgb(228 40 68);
+    color: rgb(248 241 219 / 1);
+}
+.purple{
+    background: rgb(81 2 147);
+    color: rgb(248 243 219 / 1);
+}
+.grey{
+    background: rgb(224 227 229);
+    color: rgb(0 0 0);
 }

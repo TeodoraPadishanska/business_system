@@ -9,6 +9,7 @@
     background-color: transparent;
     border-color: transparent;
     border-radius: 30px;
+    width: 100%;
 }
 .sidebar-item i{
     color: rgb(188, 108, 37);
@@ -21,6 +22,17 @@
 .sidebar-item-div{
     border: 2px solid rgb(188, 108, 37);
     border-radius: 10px;
-    margin: 5px;
+}
+.sidebar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
 
+/*.sidebar-item-div {*/
+/*    min-width: 0;*/
+/*}*/
+/**/
+.sidebar-item-div:last-child {
+    grid-column: 1 / -1;
 }

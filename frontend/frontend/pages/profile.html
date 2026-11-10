@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>profile</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="../pages-css/profile_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles.css">
@@ -31,7 +31,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+                    <ul id="nav-btns" class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
                         <li class="nav-item d-lg-none" id="categoriesMobile">
                             <button class="nav-link dropdown-toggle" data-bs-toggle="modal" role="button" data-bs-target="#categories-modal">
                                 Categories
@@ -98,38 +98,40 @@
     </div>
 
     <div class="account-content">
-        <h3>Профил</h3>
+        <h3 id="profile-name" class="ms-5 mt-2 mb-2">Профил</h3>
         <p id="name-email-profile"></p>
 
         <div id="account-sidebar">
             <div class="container text-center">
-                <div class="row row-cols-2">
-                        <a href="orders.html" class="col sidebar-item-div">
+                <div class="row sidebar-grid">
+                        <a href="orders.html" class="sidebar-item-div">
                             <button class="sidebar-item">
                                 <i class="bi bi-cart3"></i>
                                 <span>Моите поръчки</span>
                             </button>
                         </a>
-                    <div class="col sidebar-item-div">
+                    <div class="sidebar-item-div">
                         <button class="sidebar-item">
                             <i class="bi bi-sliders"></i>
                             <span>Настройки</span>
                         </button>
                     </div>
-                    <div class="col sidebar-item-div">
+                    <div class="sidebar-item-div">
                         <button class="sidebar-item">
                             <i class="bi bi-geo-alt-fill"></i>
                             <span>Моят адрес</span>
                         </button>
                     </div>
-                    <div class="col sidebar-item-div">
-                        <button class="sidebar-item">
-                            <i class="bi bi-suit-heart-fill"></i>
-                            <span>Любими</span>
-                        </button>
+                    <div class="sidebar-item-div">
+                        <a href="favourites.html">
+                            <button class="sidebar-item">
+                                <i class="bi bi-suit-heart-fill"></i>
+                                <span>Любими</span>
+                            </button>
+                        </a>
                     </div>
-                    <div class="col-12 sidebar-item-div">
-                        <button class="sidebar-item">
+                    <div class="sidebar-item-div">
+                        <button id="logout-btn" class="sidebar-item">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Изход</span>
                         </button>
@@ -240,7 +242,7 @@
                             </label>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="createAccount()">Регистрация</button>
+                    <button id="register-btn-modal" type="button" class="btn btn-style" onclick="createAccount()">Регистрация</button>
                 </form>
                 <div class="dropdown-divider"></div>
                 <a data-bs-toggle="modal" data-bs-target="#log-in-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px; margin-bottom: 20px">
