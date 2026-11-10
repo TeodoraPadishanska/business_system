@@ -29,7 +29,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 400px;">
+                <ul id="nav-btns" class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 400px;">
                     <li class="nav-item d-lg-none" id="categoriesMobile">
                         <button class="colour-text nav-link dropdown-toggle" data-bs-toggle="modal" role="button" data-bs-target="#categories-modal">
                             Категории
@@ -38,7 +38,7 @@
                     <li class="nav-item">
                         <a id="nav-fav" class="colour-text nav-link active " aria-current="page" href="#">♡</a>
                     </li>
-                    <li>
+                    <li >
                         <button id="loginBtn" class="nav-link colour-text" data-bs-toggle="modal" role="button" data-bs-target="#log-in-modal">Вход</button>
                         <button id="profileBtn" class="colour-text" style="display:none;" onclick="window.location.href = 'pages/profile.html'">Профил</button>
                     </li>
@@ -230,8 +230,8 @@
             <img id="qr-code" src="images/download-options/mobile-app-download-qr-code.svg" alt="download-qr-code">
         </div>
         <div id="stores">
-            <img id="google-play-download" src="images/download-options/download-g-play-store.svg" alt="google-play-download">
-            <img id="apple-store-download" src="images/download-options/download-apple-store.svg" alt="app-store-download">
+            <a href="https://"><img id="google-play-download" src="images/download-options/download-g-play-store.svg" alt="google-play-download"></a>
+            <a><img id="apple-store-download" src="images/download-options/download-apple-store.svg" alt="app-store-download"></a>
         </div>
     </div>
     <div class="info-container">
@@ -257,12 +257,12 @@
         <div class="info-card">
             <p>последвай ни</p>
             <ul id="follow-us">
-                <li><img src="images/socials/facebook.svg" alt="facebook"></li>
-                <li><img id="instagram" src="images/socials/instagram.svg" alt="instagram"></li>
-                <li><img src="images/socials/linkedin.svg" alt="linkedin"></li>
-                <li><img src="images/socials/youtube.svg" alt="youtube"></li>
-                <li><img src="images/socials/tiktok.svg" alt="tiktok"></li>
-                <li><img src="images/socials/spotify.svg" alt="spotify"></li>
+                <li><a href="https://facebook.com"><img src="images/socials/facebook.svg" alt="facebook"></a></li>
+                <li><a href="https://instagram.com"><img style="height: 20px" src="images/socials/instagram.svg" alt="instagram"></a></li>
+                <li><a href="https://bg.linkedin.com"><img src="images/socials/linkedin.svg" alt="linkedin"></a></li>
+                <li><a href="https://youtube.com"><img src="images/socials/youtube.svg" alt="youtube"></a></li>
+                <li><a href="https://tiktok.com"><img src="images/socials/tiktok.svg" alt="tiktok"></a></li>
+                <li><a href="https://spotify.com"><img src="images/socials/spotify.svg" alt="spotify"></a></li>
             </ul>
         </div>
     </div>
@@ -308,6 +308,19 @@
     </div>
     <p id="kunviniuns">2026 Кънвиниънс АД. Всички права запазени.</p>
 </footer>
+
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="cart-toast" class="toast" role="status">
+        <div class="toast-header">
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+
+        <div class="toast-body fs-5 fw-bold">
+            Продуктът е добавен в количката!
+        </div>
+    </div>
+</div>
 
 <!--modals-->
 <div class="modal fade" id="categories-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -394,7 +407,7 @@
                         </label>
                     </div>
                 </div>
-                <button id="register-btn-modal" type="button" class="btn btn-primary btn-style" onclick="createAccount()">Регистрация</button>
+                <button id="register-btn-modal" type="button" class="btn btn-style" onclick="createAccount()">Регистрация</button>
             </form>
             <div class="dropdown-divider"></div>
             <a data-bs-toggle="modal" data-bs-target="#log-in-modal" data-bs-dismiss="modal" style="cursor: pointer; margin-left: 30px; margin-bottom: 20px">

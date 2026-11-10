@@ -1,8 +1,16 @@
 
-import { updateCartPrice, checkLoginStatus, getCartPrice } from "./common.js";
+import {
+    updateCartPrice,
+    checkLoginStatusNavBtn,
+    getCartPrice,
+    checkBackendHealth,
+    checkAdminStatusNavBtn
+} from "./common.js";
 
+checkBackendHealth()
 
-checkLoginStatus();
+checkAdminStatusNavBtn();
+checkLoginStatusNavBtn();
 updateCartPrice();
 
 const token = localStorage.getItem("token");
@@ -16,8 +24,6 @@ async function loadCart() {
     })
         .then(response => {
             if (response.status === 403 || response.status === 401) {
-
-
                 throw new Error("UNAUTHORIZED");
             }
             if (!response.ok) {
@@ -35,7 +41,7 @@ async function loadCart() {
             cartItemsDiv.innerHTML = ``;
             if(data.length === 0) {
                 let emptyCartMessage = document.createElement("h3");
-                emptyCartMessage.textContent = `Количката Ви е праззна.`;
+                emptyCartMessage.textContent = `Количката Ви е празна.`;
                 let homeBtn = document.createElement("button");
                 homeBtn.className = "btn";
                 homeBtn.id="home-btn";

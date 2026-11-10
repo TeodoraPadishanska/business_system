@@ -27,7 +27,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+                <ul id="nav-btns" class="navbar-nav ms-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
                     <li class="nav-item d-lg-none" id="categoriesMobile">
                         <button class="nav-link dropdown-toggle" data-bs-toggle="modal" role="button" data-bs-target="#categories-modal">
                             Categories
@@ -104,14 +104,6 @@
     </div>
     <h3>Кулинари в eBag</h3>
     <div id="chefs">
-<!--        <div class="card">-->
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJReh43Ia3-rXNpngshYlwPivTMIlW6ivoBJAuITbEsQ&s=10" class="card-img-top">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">Таньо Шишков</h5>-->
-<!--                <h6 class="card-subtitle mb-2 text-body-secondary">Шеф кулинар</h6>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
         <div id="card" class="card">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJReh43Ia3-rXNpngshYlwPivTMIlW6ivoBJAuITbEsQ&s=10" class="card-img-top" alt="Таньо Шишков">
             <div id="card-text" class="card-body">
@@ -231,7 +223,11 @@
     </div>
 </div>
 
-<script src="../pages-js/auth.js"></script>
+<script src="../pages-js/auth.js">
+    import(checkLoginStatusNavBtn(), checkAdminStatusNavBtn());
+    checkAdminStatusNavBtn();
+    checkLoginStatusNavBtn();
+</script>
 <script type="module" src="../pages-js/common.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
