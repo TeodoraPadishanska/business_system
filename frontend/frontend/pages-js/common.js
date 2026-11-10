@@ -24,7 +24,7 @@ export async function updateCartPrice(){
 
 
 
-export async function checkLoginStatus(){
+export async function checkLoginStatusNavBtn(){
     const token = localStorage.getItem("token");
     console.log(token);
 
@@ -52,7 +52,60 @@ export async function checkLoginStatus(){
                 localStorage.removeItem("token");
             }
         })
+    }
+}
+
+export async function checkAdminStatusNavBtn(){
+
+    const token = localStorage.getItem("token");
+
+    const response = await fetch("http://localhost:8080/business/users/me", {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if (response.ok) {
+        const data = await response.json();
+        if(data.isAdmin){
+            const adminLi = document.createElement("li");
+            adminLi.classList.add("nav-item");
+
+            const adminLink = document.createElement("a");
+            adminLink.href = "/pages/admin.html";
+            adminLink.textContent = "Admin";
+            adminLink.classList.add("colour-text", "mt-3", "nav-link");
+
+            adminLi.appendChild(adminLink);
+            const navBtns = document.getElementById("nav-btns");
+
+            navBtns.insertBefore(adminLi, navBtns.lastElementChild);
+
+        }
+    }
+}
+
+export function checkBackendHealth(){
+    // TODO: go to offline nad prevent further script execution if backend is offline
+    try{
+        fetch("http://localhost:8080/business/health").then(data => {data.json()});
 
     }
+    catch(error){
+        window.location.href = "/offline.html";
+
+    }
+
+}
+
+
+
+export function storeOrderViewId(id){
+    localStorage.setItem("orderViewId", id);
+}
+
+export function getOrderViewId(){
+    return localStorage.getItem("orderViewId");
 }
 

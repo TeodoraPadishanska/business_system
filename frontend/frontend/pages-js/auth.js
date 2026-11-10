@@ -9,14 +9,17 @@ async function createAccount(){
     if(password.value === repeatPassword.value){
         repeatPassword.style.border = "1px solid lightgray";
         document.getElementById("password-repeat-error").innerHTML = "";
-    }else{
+    }else if(password.value !== repeatPassword.value && repeatPassword.value !== ""){
         repeatPassword.style.border = "2px solid red";
         document.getElementById("password-repeat-error").innerHTML = "Паролата не съвпада! ";
+    }else{
+        document.getElementById("password-repeat-error").innerHTML = "";
+        repeatPassword.style.border = "2px solid red";
     }
 
     let valid = true;
 
-    [email, password, firstName, lastName, phoneNumber].forEach(input => {
+    [email, password, repeatPassword, firstName, lastName, phoneNumber].forEach(input => {
         if (input.value.trim() === "") {
             input.style.border = "2px solid red";
             valid = false;
@@ -48,8 +51,8 @@ async function createAccount(){
 
     const responseJson = await res.json();
     if (res.ok) {
-        alert(responseJson.message);
-        // alert("Регистрацията е успешна!");
+        console.log(responseJson);
+        // alert(responseJson.message);
         let modal = bootstrap.Modal.getInstance(document.getElementById("register-modal"));
         modal.hide();
         document.getElementById("register-form").reset();
@@ -64,14 +67,15 @@ async function createAccount(){
         return;
     }
     if (res.status === 409) {
-        if (responseJson.error === "EMAIL_EXISTS") {
+        console.log(responseJson);
+        if (responseJson.message === "This email is already registered!") {
             email.style.border = "2px solid red";
             document.getElementById("email-register-error").innerHTML = responseJson.message;
         }else{
             email.style.border = "1px solid lightgray";
             document.getElementById("email-register-error").innerHTML = "";
         }
-        if (responseJson.error === "PHONE_EXISTS") {
+        if (responseJson.message === "This phone is already registered!") {
             phoneNumber.style.border = "2px solid red";
             document.getElementById("phone-register-error").innerHTML = responseJson.message;
         }else{
